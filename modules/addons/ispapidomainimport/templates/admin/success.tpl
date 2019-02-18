@@ -1,0 +1,1 @@
+<font color='#00a000'>{$msg}</font>

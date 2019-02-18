@@ -1,0 +1,31 @@
+{
+    "name": "whmcs/whmcs-ispapi-domainimport",
+    "description": "WHMCS ISPAPI Addon Module for Domain Import from HEXONET system",
+    "keywords": [
+        "whmcs",
+        "web host automation platform",
+        "addon module",
+        "domain import",
+        "HEXONET"
+    ],
+    "homepage": "https://hexonet.net/",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Kai Schwarz",
+            "email": "kschwarz@hexonet.net",
+            "homepage": "https://hexonet.net/",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "email": "help@hexonet.support",
+        "wiki": "https://wiki.hexonet.net/wiki/WHMCS_Modules",
+        "issues": "https://github.com/hexonet/whmcs-ispapi-domainimport/issues",
+        "source": "https://github.com/hexonet/whmcs-ispapi-domainimport",
+        "docs": "https://github.com/hexonet/whmcs-ispapi-domainimport/wiki"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "@stable"
+    }
+}

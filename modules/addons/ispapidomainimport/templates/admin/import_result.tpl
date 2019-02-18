@@ -1,0 +1,1 @@
+<li><span style='display: block; float:left; min-width:15em;'>{$domain}: {$result}</span></li>

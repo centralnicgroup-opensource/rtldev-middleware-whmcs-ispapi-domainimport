@@ -1,0 +1,1 @@
+<font color="#a00000">{$error}</font>
