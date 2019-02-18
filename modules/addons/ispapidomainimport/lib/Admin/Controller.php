@@ -2,7 +2,6 @@
 
 namespace WHMCS\Module\Addon\IspapiDomainImport\Admin;
 use ISPAPISSL\Helper;
-use WHMCS\Smarty;
 
 /**
  * Admin Area Controller
@@ -207,6 +206,7 @@ class Controller {
             $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
             $smarty->assign('currencies', $this->getCurrencies());
             $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
+            $smarty->assign('domain', array( $_REQUEST["currency"] => " selected" ));
             if (!isset($_REQUEST["domain"])) {
                 $_REQUEST["domain"] = "*";
             }
