@@ -1,5 +1,3 @@
-<!-- import header.tpl -->
-
 <form method='POST'>
     <p><b>Query Domainlist</b></p>
     <table class="form" width="100%" border="0" cellspacing="2" cellpadding="3">
