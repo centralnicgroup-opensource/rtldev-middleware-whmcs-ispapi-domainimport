@@ -6,7 +6,7 @@
         <tr>
             <td width="15%" class="fieldlabel"><label for="domain">Domain:</label></td>
             <td class="fieldarea">
-                <input type="text" name="domain" value="{$_REQUEST["domain"] | htmlspecialchars}" />
+                <input type="text" name="domain" value="{$smarty.request.domain|htmlspecialchars}" />
             </td>
         </tr>
     </table>
@@ -38,7 +38,7 @@
         <tr>
             <td width="15%" class="fieldlabel"><label for="domains">Domains</label></td>
             <td class="fieldarea">
-                <textarea name='domains' id='domains' cols='60' rows='10'>{$_REQUEST["domains"]|htmlspecialchars}</textarea>
+                <textarea name='domains' id='domains' cols='60' rows='10'>{$smarty.request.domains|htmlspecialchars}</textarea>
             </td>
         </tr>
     </table>

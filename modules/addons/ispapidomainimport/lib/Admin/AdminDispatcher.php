@@ -15,21 +15,19 @@ class AdminDispatcher {
      *
      * @return string
      */
-    public function dispatch($action, $args)
+    public function dispatch($action, $args, $smarty)
     {
-        if (!$action) {
-            // Default to index if no action specified
+        if (!$action){
             $action = 'index';
         }
-
         $controller = new Controller();
-
         // Verify requested action is valid and callable
         if (is_callable(array($controller, $action))) {
-            $controller->$action($args);
+            $controller->$action($args, $smarty);
+            return;
         }
-
         //todo smarty output
-        echo "<p>{$args['_lang']['actionerror']}</p>";
+        $smarty->assign("error", $args['_lang']['actionerror']);
+        $smarty->display('error.tpl');
     }
 }

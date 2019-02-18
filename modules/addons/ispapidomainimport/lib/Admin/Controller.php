@@ -1,14 +1,13 @@
 <?php
 
 namespace WHMCS\Module\Addon\IspapiDomainImport\Admin;
+use ISPAPISSL\Helper;
+use WHMCS\Smarty;
 
 /**
  * Admin Area Controller
  */
 class Controller {
-
-    private $tplfolder;
-    private $smarty;
 
     private function getPaymentGateways()
     {
@@ -113,25 +112,25 @@ class Controller {
         array_walk($info, 'db_escape_string');
         $result = Helper::SQLCall("INSERT INTO tbldomains (".implode(", ", array_keys($info)).") VALUES (".implode(", ", array_values($info)).")", array(), "execute");
         if (!$result) {
-            $this->smarty->assign('error', 'Could not create domain in database!');
-            echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+            $smarty->assign('error', 'Could not create domain in database!');
+            echo $smarty->fetch('error.tpl');
             return;
         }
-        $this->smarty->assign('msg', 'OK');
-        echo $this->smarty->fetch($this->tplfolder . 'success.tpl');
+        $smarty->assign('msg', 'OK');
+        echo $smarty->fetch('success.tpl');
     }
 
     private function importDomain($domain, &$registrar)
     {
         if (!preg_match('/(\..*)$/i', $domain, $m)) {
-            $this->smarty->assign('error', 'Could not find TLD in Domain Name');
-            echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+            $smarty->assign('error', 'Could not find TLD in Domain Name');
+            echo $smarty->fetch('error.tpl');
         } else {
             $tld = strtolower($m[1]);
             $row = Helper::SQLCall("SELECT `id` FROM tbldomains WHERE domain='" . db_escape_string($domain) . "' AND status IN ('Pending', 'Pending Transfer', 'Active') AND registrar='ispapi' LIMIT 1", array(), "fetch");
             if ($row){
-                $this->smarty->assign('error', 'Aldready existing');
-                echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+                $smarty->assign('error', 'Aldready existing');
+                echo $smarty->fetch('error.tpl');
                 return;
             }
             $r = Helper::APICall($registrar, array(
@@ -139,14 +138,14 @@ class Controller {
                 "DOMAIN"  => $domain
             ));
             if (!($r["CODE"] == 200)) {
-                $this->smarty->assign('error', $r["DESCRIPTION"]);
-                echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+                $smarty->assign('error', $r["DESCRIPTION"]);
+                echo $smarty->fetch('error.tpl');
                 return;
             }
             $registrant = $r["PROPERTY"]["OWNERCONTACT"][0];
             if (!$registrant) {
-                $this->smarty->assign('error', "No Registrant!");
-                echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+                $smarty->assign('error', "No Registrant!");
+                echo $smarty->fetch('error.tpl');
                 return;
             }
             if (!isset($registrar["_contact_hash"][$registrant])) {
@@ -155,12 +154,12 @@ class Controller {
                     "DOMAIN"  => $registrant
                 ));
                 if (!($r["CODE"] == 200)) {
-                    $this->smarty->assign('error', "Error with Registrant data!");
-                    echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+                    $smarty->assign('error', "Error with Registrant data!");
+                    echo $smarty->fetch('error.tpl');
                     return;
                 }
                 $registrar["_contact_hash"][$registrant] = $r2["PROPERTY"];
-            }            
+            }
             $contact = $registrar["_contact_hash"][$registrant];
             if ((!$contact["EMAIL"][0]) || (preg_match('/null$/i', $contact["EMAIL"][0]))) {
                 $contact["EMAIL"][0] = "info@".$domain;
@@ -169,27 +168,19 @@ class Controller {
             if (!$client) {
                 $client = createClient($contact);
                 if (!$client) {
-                    $this->smarty->assign('error', "Could not create client!");
-                    echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+                    $smarty->assign('error', "Could not create client!");
+                    echo $smarty->fetch('error.tpl');
                     return;
                 }
             }
             $domainprices = getDomainPrices(getCurrencyByClient($client));
             if (!isset($domainprices[$tld]['domainrenew'][1])) {
-                $this->smarty->assign('error', "Could not find domain renewal price for TLD {$tld}");
-                echo $this->smarty->fetch($this->tplfolder . 'error.tpl');
+                $smarty->assign('error', "Could not find domain renewal price for TLD {$tld}");
+                echo $smarty->fetch('error.tpl');
                 return;
             }
             createDomain($domain, $tld, $client, $domainprices);
         }
-    }
-
-    public function Controller()
-    {
-        $this->tplfolder = implode(DIRECTORY_SEPARATOR, array(dirname(__FILE__), '..', 'templates', ""));
-        $this->smarty = new Smarty();
-        $this->smarty->compile_dir = $GLOBALS['templates_compiledir'];
-        $this->smarty->caching = false;
     }
 
     /**
@@ -199,39 +190,28 @@ class Controller {
      *
      * @return string
      */
-    public function index($vars)
+    public function index($vars, $smarty)
     {
         // get registar & config
         $registrar = $vars['ispapi_registrar'][0];
-        $opts = getregistrarconfigoptions($registrar);
-        $this->smarty->assign('registrar', $registrar);
-        $this->smarty->assign($vars);
-
-        // check config & account access
-        if (!strlen($opts["Username"])) {
-            echo $this->smarty->fetch($this->tplfolder . 'registarnoconf.tpl');
+        $smarty->assign('registrar', $registrar);
+        $r = Helper::APICall($registrar, array(
+            "command" => "StatusAccount"
+        ));
+        if (!($r["CODE"] == 200)) {
+            $smarty->assign('error', $r["DESCRIPTION"]);
+            echo $smarty->fetch('registarnoconf.tpl');
         }
         else {
-            $r = Helper::APICall($registrar, array(
-                "command" => "StatusAccount"
-            ));
-            if (!($r["CODE"] == 200)) {
-                $this->smarty->assign('error', $r["DESCRIPTION"]);
-                echo $this->smarty->fetch($this->tplfolder . 'registarnoconf.tpl');
+            $smarty->assign('gateways', $this->getPaymentGateways());
+            $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
+            $smarty->assign('currencies', $this->getCurrencies());
+            $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
+            if (!isset($_REQUEST["domain"])) {
+                $_REQUEST["domain"] = "*";
             }
-            else {
-                $gateways = $this->getPaymentGateways();
-                $gateway_selected[$_REQUEST["gateway"]] = " selected";
-                $currencies = $this->getCurrencies();
-                $currency_selected[$_REQUEST["currency"]] = " selected";
-                if (!isset($_REQUEST["domain"])) {
-                    $_REQUEST["domain"] = "*";
-                }
-                // show form
-                $this->smarty->assign('isOTE', ($opts["TestMode"] == "on"));
-                $this->smarty->assign('registrar_options', $opts);
-                echo $this->smarty->fetch($this->tplfolder . 'index.tpl');
-            }
+            // show form
+            echo $smarty->fetch('index.tpl');
         }
     }
 
@@ -242,12 +222,12 @@ class Controller {
      *
      * @return string
      */
-    public function list($vars)
+    public function list($vars, $marty)
     {
         // get registar & config
         $registrar = $vars['ispapi_registrar'][0];
-        $this->smarty->assign('registrar', $registrar);
-        $this->smarty->assign($vars);
+        $smarty->assign('registrar', $registrar);
+        $smarty->assign($vars);
 
         // fetch list of domains from API
         $_REQUEST["domains"] = "";
@@ -259,8 +239,8 @@ class Controller {
             "DOMAIN" => $_REQUEST["domain"],
         ));
         if (!($r["CODE"] == 200)) {
-            $this->smarty->assign('error', $r["DESCRIPTION"]);
-            echo $this->smarty->fetch($this->tplfolder . 'list_error.tpl');
+            $smarty->assign('error', $r["DESCRIPTION"]);
+            echo $smarty->fetch('list_error.tpl');
         }
         else {
             foreach ($r["PROPERTY"]["DOMAIN"] as $domain) {
@@ -268,8 +248,8 @@ class Controller {
             }
 
             // show the list
-            $this->smarty->assign('r', $r["PROPERTY"]);
-            echo $this->smarty->fetch($this->tplfolder . 'list.tpl');
+            $smarty->assign('r', $r["PROPERTY"]);
+            echo $smarty->fetch('list.tpl');
         }
     }
 
@@ -280,12 +260,12 @@ class Controller {
      *
      * @return string
      */
-    public function import($vars)
+    public function import($vars, $marty)
     {
         // get registar & config
         $registrar = $vars['ispapi_registrar'][0];
-        $this->smarty->assign('registrar', $registrar);
-        $this->smarty->assign($vars);
+        $smarty->assign('registrar', $registrar);
+        $smarty->assign($vars);
 
         // build list of domains from POST data
         $domains = array();
@@ -296,16 +276,16 @@ class Controller {
         }
 
         // perfom import and show result
-        echo $this->smarty->fetch($tplfolder . "import_header.tpl");
+        echo $smarty->fetch("import_header.tpl");
         if (!empty($domains)) {
             foreach($domains as $domain){
                 ob_flush();
                 flush();
-                $this->smarty->assign("domain", $domain);
-                $this->smarty->assign("result", importDomain($domain, $registrar));
-                echo $this->smarty->fetch($tplfolder . 'import_result.tpl');
+                $smarty->assign("domain", $domain);
+                $smarty->assign("result", importDomain($domain, $registrar));
+                echo $smarty->fetch('import_result.tpl');
             }
         }
-        echo $this->smarty->fetch($this->tplfolder . 'import.tpl');
+        echo $smarty->fetch('import.tpl');
     }
 }

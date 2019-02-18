@@ -17,10 +17,11 @@ if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
 
-require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","LoadRegistrars.class.php")));
-require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","Helper.class.php")));
 use ISPAPISSL\LoadRegistrars;
 use ISPAPISSL\Helper;
+require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","LoadRegistrars.class.php")));
+require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","Helper.class.php")));
+
 
 
 /**
@@ -66,12 +67,19 @@ function ispapidomainimport_output($vars)
     //load all the ISPAPI registrars
     $ispapi_registrars = new LoadRegistrars();
     $vars["ispapi_registrar"] = $ispapi_registrars->getLoadedRegistars();
+    $smarty = new Smarty;
+    $smarty->caching = false;
+    $smarty->setCompileDir( $GLOBALS['templates_compiledir'] );
+    $smarty->setTemplateDir( implode(DIRECTORY_SEPARATOR, array(".", "..", "modules", "addons", "ispapidomainimport", "templates", "admin")) );
+    $smarty->assign($vars);
     if(empty($vars["ispapi_registrar"])){
-        die($vars["_lang"]["registrarerror"]);
+        $vars["smarty"]->assign("error", $vars["_lang"]["registrarerror"]);
+        $vars["smarty"]->display('error.tpl');
+        return;
     }
     //call the dispatcher with action and data
     $dispatcher = new AdminDispatcher();
-    $dispatcher->dispatch($$_REQUEST['action'], $vars);
+    $dispatcher->dispatch($_REQUEST['action'], $vars, $smarty);
 }
 
 /**
@@ -85,5 +93,5 @@ function ispapidomainimport_output($vars)
  */
 function ispapidomainimport_sidebar($vars)
 {
-    return '<p>Sidebar output HTML goes here</p>';
+    return '';
 }
