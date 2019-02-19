@@ -250,6 +250,7 @@ class Controller {
         $smarty->assign('registrar', $registrar);
         $smarty->assign($vars);
 
+        $_REQUEST["domains"] = "";
         // fetch list of domains from API
         $r = Helper::APICall($registrar,  array(
             "COMMAND" => "QueryDomainList",
