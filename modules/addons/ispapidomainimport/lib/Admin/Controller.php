@@ -228,7 +228,7 @@ class Controller {
      *
      * @return string
      */
-    public function list($vars, $marty)
+    public function pulldomainlist($vars, $smarty)
     {
         // get registar & config
         $registrar = $vars['ispapi_registrar'][0];
@@ -236,7 +236,6 @@ class Controller {
         $smarty->assign($vars);
 
         // fetch list of domains from API
-        $_REQUEST["domains"] = "";
         $r = Helper::APICall($registrar,  array(
             "COMMAND" => "QueryDomainList",
             "USERDEPTH" => "SELF",
@@ -252,10 +251,8 @@ class Controller {
             foreach ($r["PROPERTY"]["DOMAIN"] as $domain) {
                 $_REQUEST["domains"] .= "$domain\n";
             }
-
-            // show the list
-            $smarty->assign('r', $r["PROPERTY"]);
-            echo $smarty->fetch('list.tpl');
+            $smarty->assign('count', $r["PROPERTY"]["COUNT"][0]);
+            $this->index($vars, $smarty);
         }
     }
 
@@ -266,7 +263,7 @@ class Controller {
      *
      * @return string
      */
-    public function import($vars, $marty)
+    public function importdomains($vars, $smarty)
     {
         // get registar & config
         $registrar = $vars['ispapi_registrar'][0];

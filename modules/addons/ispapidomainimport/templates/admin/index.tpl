@@ -9,9 +9,8 @@
         </tr>
     </table>
 
-    <!-- todo: switch from action name to url parameter action -->
-    <p><input type="submit" name="action_list" value="Pull Domainlist" class="button" /></p>
-    <p><b>Import Domains</b></p>
+    <p><input type="submit" name="action" value="Pull Domainlist" class="button" /></p>
+    <p><b>Import Domains{if isset($count)} ({$count}){/if}</b></p>
     <table class="form" width="100%" border="0" cellspacing="2" cellpadding="3">
         <tr>
             <td width="15%" class="fieldlabel"><label for="gateway">Payment Gateway</label></td>
@@ -41,20 +40,5 @@
         </tr>
     </table>
 
-    <!-- todo: switch from action name to url parameter action -->
-    <p><input type="submit" name="action_import" value="Import Domains" class="button" /></p>
+    <p><input type="submit" name="action" value="Import Domains" class="button" /></p>
 </form>
-
-
-<!--
-<p>
-    <a href="{$modulelink}&action=show" class="btn btn-success">
-        <i class="fa fa-check"></i>
-        Visit valid action link
-    </a>
-    <a href="{$modulelink}&action=invalid" class="btn btn-default">
-        <i class="fa fa-times"></i>
-        Visit invalid action link
-    </a>
-</p>
--->

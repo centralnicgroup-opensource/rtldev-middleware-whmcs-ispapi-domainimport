@@ -20,6 +20,9 @@ class AdminDispatcher {
         if (!$action){
             $action = 'index';
         }
+        else {
+            $action = strtolower(preg_replace("/\s/", "", $action));
+        }
         $controller = new Controller();
         // Verify requested action is valid and callable
         if (is_callable(array($controller, $action))) {
