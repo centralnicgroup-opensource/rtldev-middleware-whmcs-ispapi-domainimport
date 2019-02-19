@@ -147,7 +147,7 @@ class Controller {
         if (!$registrant) {
             return array(
                 success => false,
-                msg => "No Registrant!"
+                msg => "No Registrant assigned"
             );
         }
         if (!isset($contacts["_contact_hash"][$registrant])) {
@@ -158,7 +158,7 @@ class Controller {
             if (!($r["CODE"] == 200)) {
                 return array(
                     success => false,
-                    msg => "Error with Registrant data!"
+                    msg => "Error with Registrant data"
                 );
             }
             $contacts["_contact_hash"][$registrant] = $r2["PROPERTY"];
@@ -173,7 +173,7 @@ class Controller {
             if (!$client) {
                 return array(
                     success => false,
-                    msg => "Could not create client!"
+                    msg => "Could not create client"
                 );
             }
         }
@@ -188,7 +188,7 @@ class Controller {
         if (!$result) {
             return array(
                 success => false,
-                msg => "Could not create domain in database!"
+                msg => "Could not create domain in database"
             );
         }
         return array(
