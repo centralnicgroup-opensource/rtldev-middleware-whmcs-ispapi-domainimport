@@ -1,1 +1,1 @@
-<font color="#a00000">{$error}</font>
+<span class="label label-danger">{$error}</span>
