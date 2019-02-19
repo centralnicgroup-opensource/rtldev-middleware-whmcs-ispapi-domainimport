@@ -1,4 +1,5 @@
-</ul>
+    </tbody>
+</table>
 
 <form method="POST">
     <input type='hidden' name='gateway' value='{$smarty.request.gateway|htmlspecialchars}' />

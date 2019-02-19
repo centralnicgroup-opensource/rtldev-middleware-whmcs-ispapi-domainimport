@@ -120,27 +120,35 @@ class Controller {
     private function importDomain($domain, $registrar, &$contacts, $smarty)
     {
         if (!preg_match('/(\..*)$/i', $domain, $m)) {
-            $smarty->assign('error', 'Could not find TLD in Domain Name');
-            return $smarty->fetch('error.tpl');
+            return array(
+                success => false,
+                msg => 'Could not find TLD in Domain Name'
+            );
         }
         $tld = strtolower($m[1]);
         $row = Helper::SQLCall("SELECT `id` FROM tbldomains WHERE domain='" . db_escape_string($domain) . "' AND status IN ('Pending', 'Pending Transfer', 'Active') AND registrar='ispapi' LIMIT 1", array(), "fetch");
         if ($row){
-            $smarty->assign('error', 'Aldready existing');
-            return $smarty->fetch('error.tpl');
+            return array(
+                success => false,
+                msg => 'Already existing'
+            );
         }
         $r = Helper::APICall($registrar, array(
             "COMMAND" => "StatusDomain",
             "DOMAIN"  => $domain
         ));
         if (!($r["CODE"] == 200)) {
-            $smarty->assign('error', $r["DESCRIPTION"]);
-            return $smarty->fetch('error.tpl');
+            return array(
+                success => false,
+                msg => $r["DESCRIPTION"]
+            );
         }
         $registrant = $r["PROPERTY"]["OWNERCONTACT"][0];
         if (!$registrant) {
-            $smarty->assign('error', "No Registrant!");
-            return $smarty->fetch('error.tpl');
+            return array(
+                success => false,
+                msg => "No Registrant!"
+            );
         }
         if (!isset($contacts["_contact_hash"][$registrant])) {
             $r2 = Helper::APICall($registrar, array(
@@ -148,8 +156,10 @@ class Controller {
                 "DOMAIN"  => $registrant
             ));
             if (!($r["CODE"] == 200)) {
-                $smarty->assign('error', "Error with Registrant data!");
-                return $smarty->fetch('error.tpl');
+                return array(
+                    success => false,
+                    msg => "Error with Registrant data!"
+                );
             }
             $contacts["_contact_hash"][$registrant] = $r2["PROPERTY"];
         }
@@ -161,22 +171,30 @@ class Controller {
         if (!$client) {
             $client = $this->createClient($contact);
             if (!$client) {
-                $smarty->assign('error', "Could not create client!");
-                return $smarty->fetch('error.tpl');
+                return array(
+                    success => false,
+                    msg => "Could not create client!"
+                );
             }
         }
         $domainprices = $this->getDomainPrices($this->getCurrencyByClient($client));
         if (!isset($domainprices[$tld]['domainrenew'][1])) {
-            $smarty->assign('error', "Could not find domain renewal price for TLD {$tld}");
-            return $smarty->fetch('error.tpl');
+            return array(
+                success => false,
+                msg => "Could not find domain renewal price for TLD {$tld}"
+            );
         }
         $result = $this->createDomain($domain, $tld, $client, $domainprices);
         if (!$result) {
-            $smarty->assign('error', 'Could not create domain in database!');
-            return $smarty->fetch('error.tpl');
+            return array(
+                success => false,
+                msg => "Could not create domain in database!"
+            );
         }
-        $smarty->assign('msg', 'OK');
-        return $smarty->fetch('success.tpl');
+        return array(
+            success => true,
+            msg => "OK"
+        );
     }
 
     /**
