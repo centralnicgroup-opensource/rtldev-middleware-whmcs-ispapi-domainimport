@@ -202,7 +202,13 @@ class Controller {
             echo $smarty->fetch('registarnoconf.tpl');
         }
         else {
-            $smarty->assign('gateways', $this->getPaymentGateways());
+            $gateways = $this->getPaymentGateways();
+            if (empty($gateways)){
+                $smarty->assign('error', "No Payment Gateway configured.");
+                echo $smarty->fetch('error.tpl');
+                return;
+            }
+            $smarty->assign('gateways', $gateways);
             $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
             $smarty->assign('currencies', $this->getCurrencies());
             $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
