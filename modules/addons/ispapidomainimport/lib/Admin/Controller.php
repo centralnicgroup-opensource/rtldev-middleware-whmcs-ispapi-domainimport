@@ -206,34 +206,25 @@ class Controller {
      */
     public function index($vars, $smarty)
     {
-        // get registar & config
+        // get registar
         $registrar = $vars['ispapi_registrar'][0];
         $smarty->assign('registrar', $registrar);
-        $r = Helper::APICall($registrar, array(
-            "command" => "StatusAccount"
-        ));
-        if (!($r["CODE"] == 200)) {
-            $smarty->assign('error', $r["DESCRIPTION"]);
-            echo $smarty->fetch('registarnoconf.tpl');
+        // get payment gateways
+        $gateways = $this->getPaymentGateways();
+        if (empty($gateways)){
+            $smarty->assign('error', "No Payment Gateway configured.");
+            return $smarty->fetch('error.tpl');
         }
-        else {
-            $gateways = $this->getPaymentGateways();
-            if (empty($gateways)){
-                $smarty->assign('error', "No Payment Gateway configured.");
-                echo $smarty->fetch('error.tpl');
-                return;
-            }
-            $smarty->assign('gateways', $gateways);
-            $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
-            $smarty->assign('currencies', $this->getCurrencies());
-            $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
-            $smarty->assign('domain', array( $_REQUEST["currency"] => " selected" ));
-            if (!isset($_REQUEST["domain"])) {
-                $_REQUEST["domain"] = "*";
-            }
-            // show form
-            echo $smarty->fetch('index.tpl');
+        $smarty->assign('gateways', $gateways);
+        $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
+        $smarty->assign('currencies', $this->getCurrencies());
+        $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
+        $smarty->assign('domain', array( $_REQUEST["currency"] => " selected" ));
+        if (!isset($_REQUEST["domain"])) {
+            $_REQUEST["domain"] = "*";
         }
+        // show form
+        return $smarty->fetch('index.tpl');
     }
 
     /**
@@ -261,15 +252,13 @@ class Controller {
         ));
         if (!($r["CODE"] == 200)) {
             $smarty->assign('error', $r["DESCRIPTION"]);
-            echo $smarty->fetch('list_error.tpl');
+            return $smarty->fetch('list_error.tpl');
         }
-        else {
-            foreach ($r["PROPERTY"]["DOMAIN"] as $domain) {
-                $_REQUEST["domains"] .= "$domain\n";
-            }
-            $smarty->assign('count', $r["PROPERTY"]["COUNT"][0]);
-            $this->index($vars, $smarty);
+        foreach ($r["PROPERTY"]["DOMAIN"] as $domain) {
+            $_REQUEST["domains"] .= "$domain\n";
         }
+        $smarty->assign('count', $r["PROPERTY"]["COUNT"][0]);
+        return $this->index($vars, $smarty);
     }
 
     /**
@@ -295,17 +284,18 @@ class Controller {
         }
 
         // perfom import and show result
-        echo $smarty->fetch("import_header.tpl");
+        $html = $smarty->fetch("import_header.tpl");
         if (!empty($domains)) {
             $contacts = array();
             foreach($domains as $domain){
                 $smarty->assign("domain", $domain);
                 $smarty->assign("result", $this->importDomain($domain, $registrar, $contacts, $smarty));
-                echo $smarty->fetch('import_result.tpl');
+                $html .= $smarty->fetch('import_result.tpl');
                 //ob_flush();
                 //flush();
             }
         }
-        echo $smarty->fetch('import_footer.tpl');
+        $html .= $smarty->fetch('import_footer.tpl');
+        return $html;
     }
 }

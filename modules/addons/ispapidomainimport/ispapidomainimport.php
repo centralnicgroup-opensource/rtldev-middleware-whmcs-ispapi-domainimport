@@ -79,19 +79,5 @@ function ispapidomainimport_output($vars)
     }
     //call the dispatcher with action and data
     $dispatcher = new AdminDispatcher();
-    $dispatcher->dispatch($_REQUEST['action'], $vars, $smarty);
-}
-
-/**
- * Admin Area Sidebar Output.
- *
- * Used to render output in the admin area sidebar.
- *
- * @param array $vars
- *
- * @return string
- */
-function ispapidomainimport_sidebar($vars)
-{
-    return '';
+    echo $dispatcher->dispatch($_REQUEST['action'], $vars, $smarty);
 }

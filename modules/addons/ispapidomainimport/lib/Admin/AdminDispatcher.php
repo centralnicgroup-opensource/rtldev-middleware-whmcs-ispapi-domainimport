@@ -26,11 +26,10 @@ class AdminDispatcher {
         $controller = new Controller();
         // Verify requested action is valid and callable
         if (is_callable(array($controller, $action))) {
-            $controller->$action($args, $smarty);
-            return;
+            return $controller->$action($args, $smarty);
         }
         //todo smarty output
         $smarty->assign("error", $args['_lang']['actionerror']);
-        $smarty->display('error.tpl');
+        return $smarty->fetch('error.tpl');
     }
 }
