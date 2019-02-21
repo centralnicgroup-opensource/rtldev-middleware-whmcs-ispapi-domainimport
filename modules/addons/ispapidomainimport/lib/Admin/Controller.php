@@ -212,17 +212,15 @@ class Controller {
     }
 
     /**
-     * Index action.
+     * Index action. Display the Form.
      *
      * @param array $vars Module configuration parameters
+     * @param Smarty $smarty Smarty template instance
      *
      * @return string
      */
     public function index($vars, $smarty)
     {
-        // get registar
-        $registrar = $vars['ispapi_registrar'][0];
-        $smarty->assign('registrar', $registrar);
         // get payment gateways
         $gateways = $this->getPaymentGateways();
         if (empty($gateways)){
@@ -245,17 +243,14 @@ class Controller {
      * List action.
      *
      * @param array $vars Module configuration parameters
+     * @param Smarty $smarty Smarty template instance
      *
      * @return string
      */
     public function pulldomainlist($vars, $smarty)
     {
-        // get registar & config
-        $registrar = $vars['ispapi_registrar'][0];
-        $smarty->assign('registrar', $registrar);
-        $smarty->assign($vars);
-
         $_REQUEST["domains"] = "";
+        $registrar = $smarty->getTemplateVars('registrar');
         // fetch list of domains from API
         $r = Helper::APICall($registrar,  array(
             "COMMAND" => "QueryDomainList",
@@ -279,16 +274,12 @@ class Controller {
      * Import action.
      *
      * @param array $vars Module configuration parameters
+     * @param Smarty $smarty Smarty template instance
      *
      * @return string
      */
     public function importdomains($vars, $smarty)
     {
-        // get registar & config
-        $registrar = $vars['ispapi_registrar'][0];
-        $smarty->assign('registrar', $registrar);
-        $smarty->assign($vars);
-
         // build list of domains from POST data
         $domains = array();
         foreach (explode("\n", $_REQUEST["domains"]) as $domain) {
@@ -300,6 +291,7 @@ class Controller {
         // perfom import and show result
         $html = $smarty->fetch("import_header.tpl");
         if (!empty($domains)) {
+            $registrar = $smarty->getTemplateVars('registrar');
             $contacts = array();
             foreach($domains as $domain){
                 $smarty->assign("domain", $domain);

@@ -28,7 +28,7 @@ class AdminDispatcher {
         if (is_callable(array($controller, $action))) {
             return $controller->$action($args, $smarty);
         }
-        //todo smarty output
+        // action error
         $smarty->assign("error", $args['_lang']['actionerror']);
         return $smarty->fetch('error.tpl');
     }

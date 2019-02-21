@@ -64,18 +64,18 @@ function ispapidomainimport_config()
 function ispapidomainimport_output($vars)
 {
     //load all the ISPAPI registrars
-    $ispapi_registrars = new LoadRegistrars();
-    $vars["ispapi_registrar"] = $ispapi_registrars->getLoadedRegistars();
+    $registrars = (new LoadRegistrars())->getLoadedRegistars();
     $smarty = new Smarty;
     $smarty->caching = false;
     $smarty->setCompileDir( $GLOBALS['templates_compiledir'] );
     $smarty->setTemplateDir( implode(DIRECTORY_SEPARATOR, array(".", "..", "modules", "addons", "ispapidomainimport", "templates", "admin")) );
-    $smarty->assign($vars);
-    if(empty($vars["ispapi_registrar"])){
+    if(empty($registrars)){
         $vars["smarty"]->assign("error", $vars["_lang"]["registrarerror"]);
         $vars["smarty"]->display('error.tpl');
         return;
     }
+    $smarty->assign($vars);
+    $smarty->assign('registrar', $registrars[0]);
     //call the dispatcher with action and data
     $dispatcher = new AdminDispatcher();
     echo $dispatcher->dispatch($_REQUEST['action'], $vars, $smarty);
