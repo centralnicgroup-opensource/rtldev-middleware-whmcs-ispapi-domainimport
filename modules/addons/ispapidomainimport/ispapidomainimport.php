@@ -10,7 +10,6 @@
  * @license https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/LICENSE/ MIT License
  */
 
-use WHMCS\Database\Capsule;
 use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
 
 if (!defined("WHMCS")) {

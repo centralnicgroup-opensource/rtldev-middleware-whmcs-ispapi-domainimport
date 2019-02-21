@@ -11,7 +11,9 @@ class Controller {
     private function getPaymentGateways()
     {
         $gateways = array();
-        $rows = Helper::SQLCall("SELECT `gateway`, `value` FROM tblpaymentgateways WHERE setting='name' and `order`", array(), "fetchall");
+        $rows = Helper::SQLCall("SELECT `gateway`, `value` FROM tblpaymentgateways WHERE setting=:setting and `order`", array(
+            ":setting" => "name"
+        ), "fetchall");
         foreach ($rows as $key => $v) {
             $gateways[$v["gateway"]] = $v["value"];
         }
@@ -30,7 +32,9 @@ class Controller {
 
     private function getClientByEmail($email)
     {
-        $row = Helper::SQLCall("SELECT `id` FROM tblclients WHERE email='" . db_escape_string($email) . "' LIMIT 1", array(), "fetch");
+        $row = Helper::SQLCall("SELECT `id` FROM tblclients WHERE email=:email LIMIT 1", array(
+            ":email" => $email
+        ), "fetch");
         if ($row){
             return $row["id"];
         }
@@ -39,7 +43,9 @@ class Controller {
 
     private function getCurrencyByClient($clientid)
     {
-        $row = Helper::SQLCall("SELECT `currency` FROM tblclients WHERE id='" . db_escape_string($clientid) . "'", array(), "fetch");
+        $row = Helper::SQLCall("SELECT `currency` FROM tblclients WHERE id=:id", array(
+            ":id" => $clientid
+        ), "fetch");
         if ($row){
             return $row["currency"];
         }
@@ -48,7 +54,9 @@ class Controller {
 
     function getDomainPrices($currencyid)
     {
-        $rows = Helper::SQLCall("SELECT tdp.extension, tp.type, msetupfee year1, qsetupfee year2, ssetupfee year3, asetupfee year4, bsetupfee year5, monthly year6, quarterly year7, semiannually year8, annually year9, biennially year10 FROM tbldomainpricing tdp, tblpricing tp WHERE tp.relid = tdp.id AND tp.currency = ".$currencyid, array(), "fetchall");
+        $rows = Helper::SQLCall("SELECT tdp.extension, tp.type, msetupfee year1, qsetupfee year2, ssetupfee year3, asetupfee year4, bsetupfee year5, monthly year6, quarterly year7, semiannually year8, annually year9, biennially year10 FROM tbldomainpricing tdp, tblpricing tp WHERE tp.relid=tdp.id AND tp.currency=:currency", array(
+            ":currency" => $currencyid
+        ), "fetchall");
         foreach ($rows as $key => &$row){
             for ($i=1; $i<=10; $i++){
                 if ($row['year'.$i] != 0) {
@@ -62,29 +70,31 @@ class Controller {
     private function createClient($contact)
     {
         $info = array(
-            firstname => $contact["FIRSTNAME"][0],
-            lastname => $contact["LASTNAME"][0],
-            companyname => $contact["ORGANIZATION"][0],
-            email => $contact["EMAIL"][0],
-            address1 => $contact["STREET"][0],
-            address2 => $contact["STREET"][1],
-            city => $contact["CITY"][0],
-            state => $contact["STATE"][0],
-            postcode => $contact["ZIP"][0],
-            country => strtoupper($contact["COUNTRY"][0]),
-            phonenumber => $contact["PHONE"][0],
-            password => "",
-            currency => $_REQUEST["currency"],
-            language => "English",
-            credit => "0.00",
-            lastlogin => "0000-00-00 00:00:00",
-            phonenumber => preg_replace('/^\+/', '', $info["phonenumber"]) || "NONE",
-            postcode => preg_replace('/[^0-9a-zA-Z ]/', '', $info["postcode"] || "N/A")
+            ":firstname" => $contact["FIRSTNAME"][0],
+            ":lastname" => $contact["LASTNAME"][0],
+            ":companyname" => $contact["ORGANIZATION"][0],
+            ":email" => $contact["EMAIL"][0],
+            ":address1" => $contact["STREET"][0],
+            ":address2" => $contact["STREET"][1],
+            ":city" => $contact["CITY"][0],
+            ":state" => $contact["STATE"][0],
+            ":postcode" => $contact["ZIP"][0],
+            ":country" => strtoupper($contact["COUNTRY"][0]),
+            ":phonenumber" => $contact["PHONE"][0],
+            ":password" => "",
+            ":currency" => $_REQUEST["currency"],
+            ":language" => "English",
+            ":credit" => "0.00",
+            ":lastlogin" => "0000-00-00 00:00:00",
+            ":phonenumber" => preg_replace('/^\+/', '', $info["phonenumber"]) || "NONE",
+            ":postcode" => preg_replace('/[^0-9a-zA-Z ]/', '', $info["postcode"] || "N/A")
         );
-        foreach($info as $key => &$value){
-            $value = "'" . db_escape_string($value) . "'";
-        }
-        Helper::SQLCall("INSERT INTO tblclients (datecreated, ".implode(", ", array_keys($info)).") VALUES (now(), ".implode(", ", array_values($info)).")", array(), "execute");
+        $info = array_map(function($v){
+            return (is_null($v)) ? "" : $v;
+        },$info);
+        $keys = implode(", ", preg_replace("/:/", " ", array_keys($info)));
+        $vals = implode(", ", array_keys($info));
+        Helper::SQLCall("INSERT INTO tblclients (datecreated, $keys) VALUES (now(), $vals)", $info, "execute");
         return $this->getClientByEmail($contact["EMAIL"][0]);
     }
 
@@ -92,28 +102,30 @@ class Controller {
     {
         $recurringamount = $domainprices[$tld]['domainrenew'][1];
         $info = array(
-            userid => $client,
-            orderid => 0,
-            type => "Register",
-            registrationdate => $r["PROPERTY"]["CREATEDDATE"][0],
-            domain => strtolower($domain),
-            firstpaymentamount => $recurringamount,
-            recurringamount => $recurringamount,
-            paymentmethod => $_REQUEST["gateway"],
-            registrar => "ispapi",
-            registrationperiod => 1,
-            expirydate => $r["PROPERTY"]["PAIDUNTILDATE"][0],
-            subscriptionid => "",
-            status => "Active",
-            nextduedate => $r["PROPERTY"]["PAIDUNTILDATE"][0],
-            nextinvoicedate => $r["PROPERTY"]["PAIDUNTILDATE"][0],
-            dnsmanagement => "on",
-            emailforwarding => "on"
+            ":userid" => $client,
+            ":orderid" => 0,
+            ":type" => "Register",
+            ":registrationdate" => $r["PROPERTY"]["CREATEDDATE"][0],
+            ":domain" => strtolower($domain),
+            ":firstpaymentamount" => $recurringamount,
+            ":recurringamount" => $recurringamount,
+            ":paymentmethod" => $_REQUEST["gateway"],
+            ":registrar" => "ispapi",
+            ":registrationperiod" => 1,
+            ":expirydate" => $r["PROPERTY"]["PAIDUNTILDATE"][0],
+            ":subscriptionid" => "",
+            ":status" => "Active",
+            ":nextduedate" => $r["PROPERTY"]["PAIDUNTILDATE"][0],
+            ":nextinvoicedate" => $r["PROPERTY"]["PAIDUNTILDATE"][0],
+            ":dnsmanagement" => "on",
+            ":emailforwarding" => "on"
         );
-        foreach($info as $key => &$value){
-            $value = "'" . db_escape_string($value) . "'";
-        }
-        $result = Helper::SQLCall("INSERT INTO tbldomains (".implode(", ", array_keys($info)).") VALUES (".implode(", ", array_values($info)).")", array(), "execute");
+        $info = array_map(function($v){
+            return (is_null($v)) ? "" : $v;
+        },$info);
+        $keys = implode(", ", preg_replace("/:/", " ", array_keys($info)));
+        $vals = implode(", ", array_keys($info));
+        $result = Helper::SQLCall("INSERT INTO tbldomains ($keys) VALUES ($vals)", $info, "execute");
         return $result ? true : false;
     }
 
@@ -126,7 +138,9 @@ class Controller {
             );
         }
         $tld = strtolower($m[1]);
-        $row = Helper::SQLCall("SELECT `id` FROM tbldomains WHERE domain='" . db_escape_string($domain) . "' AND status IN ('Pending', 'Pending Transfer', 'Active') AND registrar='ispapi' LIMIT 1", array(), "fetch");
+        $row = Helper::SQLCall("SELECT `id` FROM tbldomains WHERE domain=:domain AND status IN ('Pending', 'Pending Transfer', 'Active') AND registrar='ispapi' LIMIT 1", array(
+            ":domain" => $domain
+        ), "fetch");
         if ($row){
             return array(
                 success => false,
@@ -150,20 +164,20 @@ class Controller {
                 msg => "No Registrant assigned"
             );
         }
-        if (!isset($contacts["_contact_hash"][$registrant])) {
+        if (!isset($contacts[$registrant])) {
             $r2 = Helper::APICall($registrar, array(
                 "COMMAND" => "StatusContact",
-                "DOMAIN"  => $registrant
+                "CONTACT"  => $registrant
             ));
-            if (!($r["CODE"] == 200)) {
+            if (!($r2["CODE"] == 200)) {
                 return array(
                     success => false,
                     msg => "Error with Registrant data"
                 );
             }
-            $contacts["_contact_hash"][$registrant] = $r2["PROPERTY"];
+            $contacts[$registrant] = $r2["PROPERTY"];
         }
-        $contact = $contacts["_contact_hash"][$registrant];
+        $contact = $contacts[$registrant];
         if ((!$contact["EMAIL"][0]) || (preg_match('/null$/i', $contact["EMAIL"][0]))) {
             $contact["EMAIL"][0] = "info@".$domain;
         }
