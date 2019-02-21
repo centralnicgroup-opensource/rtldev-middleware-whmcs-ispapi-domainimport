@@ -19,8 +19,8 @@ class Controller {
         $rows = Helper::SQLCall("SELECT `gateway`, `value` FROM tblpaymentgateways WHERE setting=:setting and `order`", array(
             ":setting" => "name"
         ), "fetchall");
-        foreach ($rows as $key => $v) {
-            $gateways[$v["gateway"]] = $v["value"];
+        foreach ($rows as $row) {
+            $gateways[$row["gateway"]] = $row["value"];
         }
         return $gateways;
     }
@@ -34,8 +34,8 @@ class Controller {
     {
         $currencies = array();
         $rows = Helper::SQLCall("SELECT `code`, `id` FROM tblcurrencies", array(), "fetchall");
-        foreach ($rows as $key => $v) {
-            $currencies[$v["id"]] = $v["code"];
+        foreach ($rows as $row) {
+            $currencies[$row["id"]] = $row["code"];
         }
         return $currencies;
     }
@@ -45,7 +45,7 @@ class Controller {
      * 
      * @return string
      */
-    private function getClientByEmail($email)
+    private function getClientIdByEmail($email)
     {
         $row = Helper::SQLCall("SELECT `id` FROM tblclients WHERE email=:email LIMIT 1", array(
             ":email" => $email
@@ -61,7 +61,7 @@ class Controller {
      * 
      * @return string
      */
-    private function getCurrencyByClient($clientid)
+    private function getCurrencyByClientId($clientid)
     {
         $row = Helper::SQLCall("SELECT `currency` FROM tblclients WHERE id=:id", array(
             ":id" => $clientid
@@ -84,6 +84,9 @@ class Controller {
         ), "fetchall");
         foreach ($rows as $key => &$row){
             for ($i=1; $i<=10; $i++){
+                // TODO: think about this idea
+                // move this to WHERE clause in SQL statement: one of year1-10 != 0
+                // leave this filter work to the DB itself
                 if ($row['year'.$i] != 0) {
                     $domainprices[$row['extension']][$row['type']][$i] = $row['year'.$i];
                 }
@@ -95,9 +98,12 @@ class Controller {
     /**
      * Create a new client by given API contact data and return the client id.
      * 
+     * @param array $contact StatusContact PROPERTY data from API
+     * @param string $currency currency
+     * 
      * @return string
      */
-    private function createClient($contact)
+    private function createClient($contact, $currency)
     {
         $info = array(
             ":firstname" => $contact["FIRSTNAME"][0],
@@ -112,7 +118,7 @@ class Controller {
             ":country" => strtoupper($contact["COUNTRY"][0]),
             ":phonenumber" => $contact["PHONE"][0],
             ":password" => "",
-            ":currency" => $_REQUEST["currency"],
+            ":currency" => $currency,
             ":language" => "English",
             ":credit" => "0.00",
             ":lastlogin" => "0000-00-00 00:00:00",
@@ -125,7 +131,7 @@ class Controller {
         $keys = implode(", ", preg_replace("/:/", " ", array_keys($info)));
         $vals = implode(", ", array_keys($info));
         Helper::SQLCall("INSERT INTO tblclients (datecreated, $keys) VALUES (now(), $vals)", $info, "execute");
-        return $this->getClientByEmail($contact["EMAIL"][0]);
+        return $this->getClientIdByEmail($contact["EMAIL"][0]);
     }
 
     /**
@@ -175,10 +181,10 @@ class Controller {
      * @param string $domain domain name
      * @param string $registrar registrar id
      * @param string $gateway payment gateway
+     * @param string $currency currency
      * @param array  $contacts contact data container
-     * @param Smarty $smarty Smarty instance
      */
-    private function importDomain($domain, $registrar, $gateway, &$contacts, $smarty)
+    private function importDomain($domain, $registrar, $gateway, $currency, &$contacts)
     {
         if (!preg_match('/(\..*)$/i', $domain, $m)) {
             return array(
@@ -230,24 +236,24 @@ class Controller {
         if ((!$contact["EMAIL"][0]) || (preg_match('/null$/i', $contact["EMAIL"][0]))) {
             $contact["EMAIL"][0] = "info@".$domain;
         }
-        $client = $this->getClientByEmail($contact["EMAIL"][0]);
-        if (!$client) {
-            $client = $this->createClient($contact);
-            if (!$client) {
+        $clientid = $this->getClientIdByEmail($contact["EMAIL"][0]);
+        if (!$clientid) {
+            $clientid = $this->createClient($contact, $currency);
+            if (!$clientid) {
                 return array(
                     success => false,
                     msg => "Could not create client"
                 );
             }
         }
-        $domainprices = $this->getDomainPrices($this->getCurrencyByClient($client));
+        $domainprices = $this->getDomainPrices($this->getCurrencyByClientId($clientid));
         if (!isset($domainprices[$tld]['domainrenew'][1])) {
             return array(
                 success => false,
                 msg => "Could not find domain renewal price for TLD {$tld}"
             );
         }
-        $result = $this->createDomain($domain, $r["PROPERTY"], $gateway, $client, $domainprices[$tld]['domainrenew'][1]);
+        $result = $this->createDomain($domain, $r["PROPERTY"], $gateway, $clientid, $domainprices[$tld]['domainrenew'][1]);
         if (!$result) {
             return array(
                 success => false,
@@ -280,7 +286,6 @@ class Controller {
         $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
         $smarty->assign('currencies', $this->getCurrencies());
         $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
-        $smarty->assign('domain', array( $_REQUEST["currency"] => " selected" ));
         if (!isset($_REQUEST["domain"])) {
             $_REQUEST["domain"] = "*";
         }
@@ -336,16 +341,16 @@ class Controller {
                 $domains[] = $m[1];
             }
         }
-
         // perfom import and show result
         $html = $smarty->fetch("import_header.tpl");
         if (!empty($domains)) {
             $gateway = $_REQUEST["gateway"];
+            $currency = $_REQUEST["currency"];
             $registrar = $smarty->getTemplateVars('registrar');
             $contacts = array();
             foreach($domains as $domain){
                 $smarty->assign("domain", $domain);
-                $smarty->assign("result", $this->importDomain($domain, $registrar, $gateway, $contacts, $smarty));
+                $smarty->assign("result", $this->importDomain($domain, $registrar, $gateway, $currency, $contacts, $smarty));
                 $html .= $smarty->fetch('import_result.tpl');
                 //ob_flush();
                 //flush();
