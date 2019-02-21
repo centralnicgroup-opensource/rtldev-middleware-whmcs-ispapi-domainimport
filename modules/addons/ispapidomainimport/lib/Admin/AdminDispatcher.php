@@ -17,12 +17,7 @@ class AdminDispatcher {
      */
     public function dispatch($action, $args, $smarty)
     {
-        if (!$action){
-            $action = 'index';
-        }
-        else {
-            $action = strtolower(preg_replace("/\s/", "", $action));
-        }
+        $action = ($action) ? strtolower(preg_replace("/\s/", "", $action)) : 'index';
         $controller = new Controller();
         // Verify requested action is valid and callable
         if (is_callable(array($controller, $action))) {

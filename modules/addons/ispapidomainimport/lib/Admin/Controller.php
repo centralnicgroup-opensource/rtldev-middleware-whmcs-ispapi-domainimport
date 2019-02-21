@@ -8,6 +8,11 @@ use ISPAPISSL\Helper;
  */
 class Controller {
 
+    /**
+     * Return list of available Payment Gateways
+     * 
+     * @return array
+     */
     private function getPaymentGateways()
     {
         $gateways = array();
@@ -20,6 +25,11 @@ class Controller {
         return $gateways;
     }
 
+    /**
+     * Return list of available Currencies
+     * 
+     * @return array
+     */
     private function getCurrencies()
     {
         $currencies = array();
@@ -30,6 +40,11 @@ class Controller {
         return $currencies;
     }
 
+    /**
+     * Get client id by given email address
+     * 
+     * @return string
+     */
     private function getClientByEmail($email)
     {
         $row = Helper::SQLCall("SELECT `id` FROM tblclients WHERE email=:email LIMIT 1", array(
@@ -41,6 +56,11 @@ class Controller {
         return false;
     }
 
+    /**
+     * Get currency by given client id
+     * 
+     * @return string
+     */
     private function getCurrencyByClient($clientid)
     {
         $row = Helper::SQLCall("SELECT `currency` FROM tblclients WHERE id=:id", array(
@@ -52,6 +72,11 @@ class Controller {
         return false;
     }
 
+    /**
+     * get domain prices by currency id
+     * 
+     * @return array
+     */
     function getDomainPrices($currencyid)
     {
         $rows = Helper::SQLCall("SELECT tdp.extension, tp.type, msetupfee year1, qsetupfee year2, ssetupfee year3, asetupfee year4, bsetupfee year5, monthly year6, quarterly year7, semiannually year8, annually year9, biennially year10 FROM tbldomainpricing tdp, tblpricing tp WHERE tp.relid=tdp.id AND tp.currency=:currency", array(
@@ -67,6 +92,11 @@ class Controller {
         return $domainprices;
     }
 
+    /**
+     * Create a new client by given API contact data and return the client id.
+     * 
+     * @return string
+     */
     private function createClient($contact)
     {
         $info = array(
@@ -98,25 +128,35 @@ class Controller {
         return $this->getClientByEmail($contact["EMAIL"][0]);
     }
 
-    private function createDomain($domain, $tld, $client, $domainprices)
+    /**
+     * Create a domain by given data
+     * 
+     * @param string $domain domain name
+     * @param array $apidata StatusDomain PROPERTY data from API
+     * @param string $gateway payment gateway
+     * @param string $client client id
+     * @param string $recurringamount recurring amount
+     * 
+     * @return bool domain create result
+     */
+    private function createDomain($domain, $apidata, $gateway, $client, $recurringamount)
     {
-        $recurringamount = $domainprices[$tld]['domainrenew'][1];
         $info = array(
             ":userid" => $client,
             ":orderid" => 0,
             ":type" => "Register",
-            ":registrationdate" => $r["PROPERTY"]["CREATEDDATE"][0],
+            ":registrationdate" => $apidata["CREATEDDATE"][0],
             ":domain" => strtolower($domain),
             ":firstpaymentamount" => $recurringamount,
             ":recurringamount" => $recurringamount,
-            ":paymentmethod" => $_REQUEST["gateway"],
+            ":paymentmethod" => $gateway,
             ":registrar" => "ispapi",
             ":registrationperiod" => 1,
-            ":expirydate" => $r["PROPERTY"]["PAIDUNTILDATE"][0],
+            ":expirydate" => $apidata["PAIDUNTILDATE"][0],
             ":subscriptionid" => "",
             ":status" => "Active",
-            ":nextduedate" => $r["PROPERTY"]["PAIDUNTILDATE"][0],
-            ":nextinvoicedate" => $r["PROPERTY"]["PAIDUNTILDATE"][0],
+            ":nextduedate" => $apidata["PAIDUNTILDATE"][0],
+            ":nextinvoicedate" => $apidata["PAIDUNTILDATE"][0],
             ":dnsmanagement" => "on",
             ":emailforwarding" => "on"
         );
@@ -129,7 +169,16 @@ class Controller {
         return $result ? true : false;
     }
 
-    private function importDomain($domain, $registrar, &$contacts, $smarty)
+    /**
+     * import an existing domain from HEXONET API.
+     * 
+     * @param string $domain domain name
+     * @param string $registrar registrar id
+     * @param string $gateway payment gateway
+     * @param array  $contacts contact data container
+     * @param Smarty $smarty Smarty instance
+     */
+    private function importDomain($domain, $registrar, $gateway, &$contacts, $smarty)
     {
         if (!preg_match('/(\..*)$/i', $domain, $m)) {
             return array(
@@ -198,7 +247,7 @@ class Controller {
                 msg => "Could not find domain renewal price for TLD {$tld}"
             );
         }
-        $result = $this->createDomain($domain, $tld, $client, $domainprices);
+        $result = $this->createDomain($domain, $r["PROPERTY"], $gateway, $client, $domainprices[$tld]['domainrenew'][1]);
         if (!$result) {
             return array(
                 success => false,
@@ -240,7 +289,7 @@ class Controller {
     }
 
     /**
-     * List action.
+     * pulldomainlist action. Fetch the domain list using the provided domain name filter.
      *
      * @param array $vars Module configuration parameters
      * @param Smarty $smarty Smarty template instance
@@ -271,7 +320,7 @@ class Controller {
     }
 
     /**
-     * Import action.
+     * importdomains action. import the list of submitted domains.
      *
      * @param array $vars Module configuration parameters
      * @param Smarty $smarty Smarty template instance
@@ -291,11 +340,12 @@ class Controller {
         // perfom import and show result
         $html = $smarty->fetch("import_header.tpl");
         if (!empty($domains)) {
+            $gateway = $_REQUEST["gateway"];
             $registrar = $smarty->getTemplateVars('registrar');
             $contacts = array();
             foreach($domains as $domain){
                 $smarty->assign("domain", $domain);
-                $smarty->assign("result", $this->importDomain($domain, $registrar, $contacts, $smarty));
+                $smarty->assign("result", $this->importDomain($domain, $registrar, $gateway, $contacts, $smarty));
                 $html .= $smarty->fetch('import_result.tpl');
                 //ob_flush();
                 //flush();
