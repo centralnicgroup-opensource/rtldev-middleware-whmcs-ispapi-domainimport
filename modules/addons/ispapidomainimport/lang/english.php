@@ -22,10 +22,6 @@ $_ADDONLANG['passwordcharseterror'] = "We only accept numerics and lower-/upperc
 $_ADDONLANG['nodomainsfounderror'] = "The query did not return any domains names.";
 $_ADDONLANG['domainsfound'] = "The query returned the below domain names.";
 
-// headings
-$_ADDONLANG['h2.fetchdomainlist'] = "STEP 1: Pull Domainlist";
-$_ADDONLANG['h2.importdomainlist'] = "STEP 2: Import Domainlist";
-
 // labels
 $_ADDONLANG['label.domain'] = "Domain";
 $_ADDONLANG['label.domains'] = "Domains";
@@ -38,8 +34,8 @@ $_ADDONLANG['ph.domainfilter'] = "Enter Domain Name Filter";
 $_ADDONLANG['ph.clientpassword'] = "Provide a default password";
 
 // buttons
-$_ADDONLANG['bttn.pulldomainlist'] = "Pull";
-$_ADDONLANG['bttn.importdomainlist'] = "Import";
+$_ADDONLANG['bttn.pulldomainlist'] = "Pull Domain list";
+$_ADDONLANG['bttn.importdomainlist'] = "Import Domains";
 $_ADDONLANG['bttn.back'] = "Back";
 
 // columns

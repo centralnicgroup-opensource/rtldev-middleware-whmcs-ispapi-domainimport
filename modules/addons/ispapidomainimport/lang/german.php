@@ -22,10 +22,6 @@ $_ADDONLANG['passwordcharseterror'] = "Wir aktzeptieren nur Zahlen und Klein-/Gr
 $_ADDONLANG['nodomainsfounderror'] = "Die Abfrage lieferte keine Treffer.";
 $_ADDONLANG['domainsfound'] = "Die Abfrage lieferte folgende Domainnamen.";
 
-// headings
-$_ADDONLANG['h2.fetchdomainlist'] = "SCHRITT 1: Domainliste laden";
-$_ADDONLANG['h2.importdomainlist'] = "SCHRITT 2: Domainliste importieren";
-
 // labels
 $_ADDONLANG['label.domain'] = "Domain";
 $_ADDONLANG['label.domains'] = "Domains";
@@ -38,7 +34,7 @@ $_ADDONLANG['ph.domainfilter'] = "Filter für Domainnamen eingeben";
 $_ADDONLANG['ph.clientpassword'] = "Password angeben";
 
 // buttons
-$_ADDONLANG['bttn.pulldomainlist'] = "Laden";
+$_ADDONLANG['bttn.pulldomainlist'] = "Domains auflisten";
 $_ADDONLANG['bttn.importdomainlist'] = "Importieren";
 $_ADDONLANG['bttn.back'] = "Zurück";
 
