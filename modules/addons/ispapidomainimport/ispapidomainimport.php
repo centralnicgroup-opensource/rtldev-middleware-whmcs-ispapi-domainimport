@@ -15,13 +15,12 @@ use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
 if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
-
+if (defined("ROOTDIR")) {
+    require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","LoadRegistrars.class.php")));
+    require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","Helper.class.php")));
+}
 use ISPAPISSL\LoadRegistrars;
 use ISPAPISSL\Helper;
-require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","LoadRegistrars.class.php")));
-require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","Helper.class.php")));
-
-
 
 /**
  * Define addon module configuration parameters.
@@ -50,7 +49,8 @@ function ispapidomainimport_config()
         // Default language
         'language' => 'english',
         // Version number
-        'version' => '1.0'
+        'version' => '1.0',
+        'fields' => []
     ];
 }
 
@@ -68,9 +68,9 @@ function ispapidomainimport_output($vars)
     $smarty = new Smarty;
     $smarty->escape_html = true;
     $smarty->caching = false;
-    $smarty->setCompileDir( $GLOBALS['templates_compiledir'] );
-    $smarty->setTemplateDir( implode(DIRECTORY_SEPARATOR, array(".", "..", "modules", "addons", "ispapidomainimport", "templates", "admin")) );
-    if(empty($registrars)){
+    $smarty->setCompileDir($GLOBALS['templates_compiledir']);
+    $smarty->setTemplateDir(implode(DIRECTORY_SEPARATOR, array(".", "..", "modules", "addons", "ispapidomainimport", "templates", "admin")));
+    if (empty($registrars)) {
         $vars["smarty"]->assign("error", $vars["_lang"]["registrarerror"]);
         $vars["smarty"]->display('error.tpl');
         return;

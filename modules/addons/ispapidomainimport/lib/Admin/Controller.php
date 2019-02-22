@@ -1,16 +1,18 @@
 <?php
 
 namespace WHMCS\Module\Addon\IspapiDomainImport\Admin;
+
 use ISPAPISSL\Helper;
 
 /**
  * Admin Area Controller
  */
-class Controller {
+class Controller
+{
 
     /**
      * Return list of available Payment Gateways
-     * 
+     *
      * @return array list of payment gateways
      */
     private function getPaymentGateways()
@@ -27,7 +29,7 @@ class Controller {
 
     /**
      * Return list of available Currencies
-     * 
+     *
      * @return array list of currencies
      */
     private function getCurrencies()
@@ -42,7 +44,7 @@ class Controller {
 
     /**
      * Get client id by given email address
-     * 
+     *
      * @return string|boolean the client id or false if not found
      */
     private function getClientIdByEmail($email)
@@ -50,7 +52,7 @@ class Controller {
         $row = Helper::SQLCall("SELECT `id` FROM tblclients WHERE email=:email LIMIT 1", array(
             ":email" => $email
         ), "fetch");
-        if ($row){
+        if ($row) {
             return $row["id"];
         }
         return false;
@@ -58,7 +60,7 @@ class Controller {
 
     /**
      * Get currency by given client id
-     * 
+     *
      * @return string|false client's currency or false if not found
      */
     private function getCurrencyByClientId($clientid)
@@ -66,7 +68,7 @@ class Controller {
         $row = Helper::SQLCall("SELECT `currency` FROM tblclients WHERE id=:id", array(
             ":id" => $clientid
         ), "fetch");
-        if ($row){
+        if ($row) {
             return $row["currency"];
         }
         return false;
@@ -74,16 +76,16 @@ class Controller {
 
     /**
      * get domain prices by currency id
-     * 
+     *
      * @return array list of domain prices
      */
-    function getDomainPrices($currencyid)
+    private function getDomainPrices($currencyid)
     {
         $rows = Helper::SQLCall("SELECT tdp.extension, tp.type, msetupfee year1, qsetupfee year2, ssetupfee year3, asetupfee year4, bsetupfee year5, monthly year6, quarterly year7, semiannually year8, annually year9, biennially year10 FROM tbldomainpricing tdp, tblpricing tp WHERE tp.relid=tdp.id AND tp.currency=:currency", array(
             ":currency" => $currencyid
         ), "fetchall");
-        foreach ($rows as $key => &$row){
-            for ($i=1; $i<=10; $i++){
+        foreach ($rows as $key => &$row) {
+            for ($i=1; $i<=10; $i++) {
                 // TODO: think about this idea
                 // move this to WHERE clause in SQL statement: one of year1-10 != 0
                 // leave this filter work to the DB itself
@@ -97,10 +99,10 @@ class Controller {
 
     /**
      * Create a new client by given API contact data and return the client id.
-     * 
+     *
      * @param array $contact StatusContact PROPERTY data from API
      * @param string $currency currency
-     * 
+     *
      * @return string client id
      */
     private function createClient($contact, $currency, $password)
@@ -125,9 +127,9 @@ class Controller {
             ":phonenumber" => preg_replace('/^\+/', '', $info["phonenumber"]) || "NONE",
             ":postcode" => preg_replace('/[^0-9a-zA-Z ]/', '', $info["postcode"] || "N/A")
         );
-        $info = array_map(function($v){
+        $info = array_map(function ($v) {
             return (is_null($v)) ? "" : $v;
-        },$info);
+        }, $info);
         $keys = implode(", ", preg_replace("/:/", " ", array_keys($info)));
         $vals = implode(", ", array_keys($info));
         Helper::SQLCall("INSERT INTO tblclients (datecreated, $keys) VALUES (now(), $vals)", $info, "execute");
@@ -136,13 +138,13 @@ class Controller {
 
     /**
      * Create a domain by given data
-     * 
+     *
      * @param string $domain domain name
      * @param array $apidata StatusDomain PROPERTY data from API
      * @param string $gateway payment gateway
      * @param string $client client id
      * @param string $recurringamount recurring amount
-     * 
+     *
      * @return bool domain creation result
      */
     private function createDomain($domain, $apidata, $gateway, $client, $recurringamount)
@@ -166,9 +168,9 @@ class Controller {
             ":dnsmanagement" => "on",
             ":emailforwarding" => "on"
         );
-        $info = array_map(function($v){
+        $info = array_map(function ($v) {
             return (is_null($v)) ? "" : $v;
-        },$info);
+        }, $info);
         $keys = implode(", ", preg_replace("/:/", " ", array_keys($info)));
         $vals = implode(", ", array_keys($info));
         $result = Helper::SQLCall("INSERT INTO tbldomains ($keys) VALUES ($vals)", $info, "execute");
@@ -177,14 +179,14 @@ class Controller {
 
     /**
      * import an existing domain from HEXONET API.
-     * 
+     *
      * @param string $domain domain name
      * @param string $registrar registrar id
      * @param string $gateway payment gateway
      * @param string $currency currency
      * @param string $password the default password we set for newly created customers
      * @param array  $contacts contact data container
-     * 
+     *
      * @return array where property "success" (boolean) identifies the import result and property "msgid" the translation/language key
      */
     private function importDomain($domain, $registrar, $gateway, $currency, $password, &$contacts)
@@ -199,7 +201,7 @@ class Controller {
         $row = Helper::SQLCall("SELECT `id` FROM tbldomains WHERE domain=:domain AND status IN ('Pending', 'Pending Transfer', 'Active') AND registrar='ispapi' LIMIT 1", array(
             ":domain" => $domain
         ), "fetch");
-        if ($row){
+        if ($row) {
             return array(
                 success => false,
                 msgid => 'alreadyexistingerror'
@@ -270,7 +272,8 @@ class Controller {
     }
 
     private $stringCharset = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
-    private function generateRandomString($length = 10) {
+    private function generateRandomString($length = 10)
+    {
         $characters = $this->stringCharset;
         $charactersLength = strlen($characters);
         $randomString = '';
@@ -292,7 +295,7 @@ class Controller {
     {
         // get payment gateways
         $gateways = $this->getPaymentGateways();
-        if (empty($gateways)){
+        if (empty($gateways)) {
             $smarty->assign('error', $vars["_lang"]["nogatewayerror"]);
             return $smarty->fetch('error.tpl');
         }
@@ -323,7 +326,7 @@ class Controller {
         $_REQUEST["domains"] = "";
         $registrar = $smarty->getTemplateVars('registrar');
         // fetch list of domains from API
-        $r = Helper::APICall($registrar,  array(
+        $r = Helper::APICall($registrar, array(
             "COMMAND" => "QueryDomainList",
             "USERDEPTH" => "SELF",
             "ORDERBY" => "DOMAIN",
@@ -380,7 +383,7 @@ class Controller {
             $password = $_REQUEST["clientpassword"];
             $registrar = $smarty->getTemplateVars('registrar');
             $contacts = array();
-            foreach($domains as $domain){
+            foreach ($domains as $domain) {
                 $smarty->assign("domain", $domain);
                 $smarty->assign("result", $this->importDomain($domain, $registrar, $gateway, $currency, $password, $contacts));
                 $html .= $smarty->fetch('import_result.tpl');

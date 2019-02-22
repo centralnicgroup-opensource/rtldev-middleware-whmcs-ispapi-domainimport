@@ -1,4 +1,8 @@
 <?php
+namespace IspapiTest;
+
+use PHPUnit\Framework\TestCase;
+
 /**
  * WHMCS Sample Addon Module Test
  *
@@ -14,10 +18,10 @@
  * @copyright Copyright (c) WHMCS Limited 2017
  * @license http://www.whmcs.com/license/ WHMCS Eula
  */
-class WHMCSModuleTest extends PHPUnit_Framework_TestCase
+class WHMCSModuleTest extends TestCase
 {
     /** @var string $moduleName */
-    protected $moduleName = 'ispapi_domain_import';
+    protected $moduleName = 'ispapidomainimport';
 
     /**
      * Asserts the required config options function is defined.
