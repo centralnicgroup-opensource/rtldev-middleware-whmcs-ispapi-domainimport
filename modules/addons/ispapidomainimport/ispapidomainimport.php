@@ -66,6 +66,7 @@ function ispapidomainimport_output($vars)
     //load all the ISPAPI registrars
     $registrars = (new LoadRegistrars())->getLoadedRegistars();
     $smarty = new Smarty;
+    $smarty->escape_html = true;
     $smarty->caching = false;
     $smarty->setCompileDir( $GLOBALS['templates_compiledir'] );
     $smarty->setTemplateDir( implode(DIRECTORY_SEPARATOR, array(".", "..", "modules", "addons", "ispapidomainimport", "templates", "admin")) );

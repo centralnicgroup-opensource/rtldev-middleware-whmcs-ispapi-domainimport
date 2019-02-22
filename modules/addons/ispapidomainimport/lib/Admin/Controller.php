@@ -103,7 +103,7 @@ class Controller {
      * 
      * @return string client id
      */
-    private function createClient($contact, $currency)
+    private function createClient($contact, $currency, $password)
     {
         $info = array(
             ":firstname" => $contact["FIRSTNAME"][0],
@@ -117,7 +117,7 @@ class Controller {
             ":postcode" => $contact["ZIP"][0],
             ":country" => strtoupper($contact["COUNTRY"][0]),
             ":phonenumber" => $contact["PHONE"][0],
-            ":password" => "",
+            ":password" => $password,
             ":currency" => $currency,
             ":language" => "English",
             ":credit" => "0.00",
@@ -182,11 +182,12 @@ class Controller {
      * @param string $registrar registrar id
      * @param string $gateway payment gateway
      * @param string $currency currency
+     * @param string $password the default password we set for newly created customers
      * @param array  $contacts contact data container
      * 
      * @return array where property "success" (boolean) identifies the import result and property "msgid" the translation/language key
      */
-    private function importDomain($domain, $registrar, $gateway, $currency, &$contacts)
+    private function importDomain($domain, $registrar, $gateway, $currency, $password, &$contacts)
     {
         if (!preg_match('/(\..*)$/i', $domain, $m)) {
             return array(
@@ -240,7 +241,7 @@ class Controller {
         }
         $clientid = $this->getClientIdByEmail($contact["EMAIL"][0]);
         if (!$clientid) {
-            $clientid = $this->createClient($contact, $currency);
+            $clientid = $this->createClient($contact, $currency, $password);
             if (!$clientid) {
                 return array(
                     success => false,
@@ -268,6 +269,17 @@ class Controller {
         );
     }
 
+    private $stringCharset = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    private function generateRandomString($length = 10) {
+        $characters = $this->stringCharset;
+        $charactersLength = strlen($characters);
+        $randomString = '';
+        for ($i = 0; $i < $length; $i++) {
+            $randomString .= $characters[rand(0, $charactersLength - 1)];
+        }
+        return $randomString;
+    }
+
     /**
      * Index action. Display the Form.
      *
@@ -290,6 +302,9 @@ class Controller {
         $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
         if (!isset($_REQUEST["domain"])) {
             $_REQUEST["domain"] = "*";
+        }
+        if (empty($_REQUEST["clientpassword"])) {
+            $_REQUEST["clientpassword"] = $this->generateRandomString();
         }
         // show form
         return $smarty->fetch('index.tpl');
@@ -336,6 +351,20 @@ class Controller {
      */
     public function import($vars, $smarty)
     {
+        if (empty($_REQUEST["clientpassword"])) {
+            $smarty->assign('error', $vars["_lang"]['noblankpassworderror']);
+            return (
+                $smarty->fetch('error.tpl') .
+                $smarty->fetch('bttn_back.tpl')
+            );
+        }
+        if (!preg_match("/^[" . $this->stringCharset . "]+$/", $_REQUEST["clientpassword"])) {
+            $smarty->assign('error', $vars["_lang"]['passwordcharseterror']);
+            return (
+                $smarty->fetch('error.tpl') .
+                $smarty->fetch('bttn_back.tpl')
+            );
+        }
         // build list of domains from POST data
         $domains = array();
         foreach (explode("\n", $_REQUEST["domains"]) as $domain) {
@@ -348,11 +377,12 @@ class Controller {
         if (!empty($domains)) {
             $gateway = $_REQUEST["gateway"];
             $currency = $_REQUEST["currency"];
+            $password = $_REQUEST["clientpassword"];
             $registrar = $smarty->getTemplateVars('registrar');
             $contacts = array();
             foreach($domains as $domain){
                 $smarty->assign("domain", $domain);
-                $smarty->assign("result", $this->importDomain($domain, $registrar, $gateway, $currency, $contacts, $smarty));
+                $smarty->assign("result", $this->importDomain($domain, $registrar, $gateway, $currency, $password, $contacts));
                 $html .= $smarty->fetch('import_result.tpl');
                 //ob_flush();
                 //flush();
