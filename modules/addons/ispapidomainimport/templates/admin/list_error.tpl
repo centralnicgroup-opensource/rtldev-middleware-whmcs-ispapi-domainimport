@@ -1,1 +1,1 @@
-Failed to load list of domains: {include file="error.tpl"}
+{$_lang['domainlistfetcherror']}: {include file="error.tpl"}

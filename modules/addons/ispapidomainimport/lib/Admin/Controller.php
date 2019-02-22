@@ -11,7 +11,7 @@ class Controller {
     /**
      * Return list of available Payment Gateways
      * 
-     * @return array
+     * @return array list of payment gateways
      */
     private function getPaymentGateways()
     {
@@ -28,7 +28,7 @@ class Controller {
     /**
      * Return list of available Currencies
      * 
-     * @return array
+     * @return array list of currencies
      */
     private function getCurrencies()
     {
@@ -43,7 +43,7 @@ class Controller {
     /**
      * Get client id by given email address
      * 
-     * @return string
+     * @return string|boolean the client id or false if not found
      */
     private function getClientIdByEmail($email)
     {
@@ -59,7 +59,7 @@ class Controller {
     /**
      * Get currency by given client id
      * 
-     * @return string
+     * @return string|false client's currency or false if not found
      */
     private function getCurrencyByClientId($clientid)
     {
@@ -75,7 +75,7 @@ class Controller {
     /**
      * get domain prices by currency id
      * 
-     * @return array
+     * @return array list of domain prices
      */
     function getDomainPrices($currencyid)
     {
@@ -101,7 +101,7 @@ class Controller {
      * @param array $contact StatusContact PROPERTY data from API
      * @param string $currency currency
      * 
-     * @return string
+     * @return string client id
      */
     private function createClient($contact, $currency)
     {
@@ -143,7 +143,7 @@ class Controller {
      * @param string $client client id
      * @param string $recurringamount recurring amount
      * 
-     * @return bool domain create result
+     * @return bool domain creation result
      */
     private function createDomain($domain, $apidata, $gateway, $client, $recurringamount)
     {
@@ -183,13 +183,15 @@ class Controller {
      * @param string $gateway payment gateway
      * @param string $currency currency
      * @param array  $contacts contact data container
+     * 
+     * @return array where property "success" (boolean) identifies the import result and property "msgid" the translation/language key
      */
     private function importDomain($domain, $registrar, $gateway, $currency, &$contacts)
     {
         if (!preg_match('/(\..*)$/i', $domain, $m)) {
             return array(
                 success => false,
-                msg => 'Could not find TLD in Domain Name'
+                msgid => 'domainnameinvaliderror'
             );
         }
         $tld = strtolower($m[1]);
@@ -199,7 +201,7 @@ class Controller {
         if ($row){
             return array(
                 success => false,
-                msg => 'Already existing'
+                msgid => 'alreadyexistingerror'
             );
         }
         $r = Helper::APICall($registrar, array(
@@ -209,14 +211,14 @@ class Controller {
         if (!($r["CODE"] == 200)) {
             return array(
                 success => false,
-                msg => $r["DESCRIPTION"]
+                msgid => $r["DESCRIPTION"]
             );
         }
         $registrant = $r["PROPERTY"]["OWNERCONTACT"][0];
         if (!$registrant) {
             return array(
                 success => false,
-                msg => "No Registrant assigned"
+                msgid => "registrantmissingerror"
             );
         }
         if (!isset($contacts[$registrant])) {
@@ -227,7 +229,7 @@ class Controller {
             if (!($r2["CODE"] == 200)) {
                 return array(
                     success => false,
-                    msg => "Error with Registrant data"
+                    msgid => "registrantfetcherror"
                 );
             }
             $contacts[$registrant] = $r2["PROPERTY"];
@@ -242,7 +244,7 @@ class Controller {
             if (!$clientid) {
                 return array(
                     success => false,
-                    msg => "Could not create client"
+                    msgid => "registrantcreateerror"
                 );
             }
         }
@@ -250,19 +252,19 @@ class Controller {
         if (!isset($domainprices[$tld]['domainrenew'][1])) {
             return array(
                 success => false,
-                msg => "Could not find domain renewal price for TLD {$tld}"
+                msgid => "tldrenewalpriceerror"
             );
         }
         $result = $this->createDomain($domain, $r["PROPERTY"], $gateway, $clientid, $domainprices[$tld]['domainrenew'][1]);
         if (!$result) {
             return array(
                 success => false,
-                msg => "Could not create domain in database"
+                msgid => "domaincreateerror"
             );
         }
         return array(
             success => true,
-            msg => "OK"
+            msgid => "ok"
         );
     }
 
@@ -272,14 +274,14 @@ class Controller {
      * @param array $vars Module configuration parameters
      * @param Smarty $smarty Smarty template instance
      *
-     * @return string
+     * @return string html code
      */
     public function index($vars, $smarty)
     {
         // get payment gateways
         $gateways = $this->getPaymentGateways();
         if (empty($gateways)){
-            $smarty->assign('error', "No Payment Gateway configured.");
+            $smarty->assign('error', $vars["_lang"]["nogatewayerror"]);
             return $smarty->fetch('error.tpl');
         }
         $smarty->assign('gateways', $gateways);
@@ -294,14 +296,14 @@ class Controller {
     }
 
     /**
-     * pulldomainlist action. Fetch the domain list using the provided domain name filter.
+     * pull action. Fetch the domain list using the provided domain name filter.
      *
      * @param array $vars Module configuration parameters
      * @param Smarty $smarty Smarty template instance
      *
-     * @return string
+     * @return string html code
      */
-    public function pulldomainlist($vars, $smarty)
+    public function pull($vars, $smarty)
     {
         $_REQUEST["domains"] = "";
         $registrar = $smarty->getTemplateVars('registrar');
@@ -325,14 +327,14 @@ class Controller {
     }
 
     /**
-     * importdomains action. import the list of submitted domains.
+     * import action. import the list of submitted domains.
      *
      * @param array $vars Module configuration parameters
      * @param Smarty $smarty Smarty template instance
      *
-     * @return string
+     * @return string html code
      */
-    public function importdomains($vars, $smarty)
+    public function import($vars, $smarty)
     {
         // build list of domains from POST data
         $domains = array();

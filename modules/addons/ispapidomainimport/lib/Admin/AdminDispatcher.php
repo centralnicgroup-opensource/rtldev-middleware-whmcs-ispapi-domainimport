@@ -25,6 +25,9 @@ class AdminDispatcher {
         }
         // action error
         $smarty->assign("error", $args['_lang']['actionerror']);
-        return $smarty->fetch('error.tpl');
+        return (
+            $smarty->fetch('error.tpl') .
+            $smarty->fetch('bttn_back.tpl')
+        );
     }
 }
