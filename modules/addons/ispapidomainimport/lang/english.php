@@ -19,10 +19,12 @@ $_ADDONLANG['nogatewayerror'] = "No Payment Gateway configured.";
 $_ADDONLANG['domainlistfetcherror'] = "Failed to load list of domains.";
 $_ADDONLANG['noblankpassworderror'] = "Provide a password for clients that will be created while importing. For security reasons, do not leave it blank.";
 $_ADDONLANG['passwordcharseterror'] = "We only accept numerics and lower-/uppercase alphabetics as character set for the client password.";
+$_ADDONLANG['nodomainsfounderror'] = "The query did not return any domains names.";
+$_ADDONLANG['domainsfound'] = "The query returned the below domain names.";
 
 // headings
-$_ADDONLANG['h2.fetchdomainlist'] = "Pull Domainlist";
-$_ADDONLANG['h2.importdomainlist'] = "Import Domainlist";
+$_ADDONLANG['h2.fetchdomainlist'] = "STEP 1: Pull Domainlist";
+$_ADDONLANG['h2.importdomainlist'] = "STEP 2: Import Domainlist";
 
 // labels
 $_ADDONLANG['label.domain'] = "Domain";
