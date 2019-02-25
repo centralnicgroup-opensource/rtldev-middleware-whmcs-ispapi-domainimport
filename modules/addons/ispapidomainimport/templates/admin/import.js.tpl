@@ -6,6 +6,9 @@ const currency = {$smarty.request.currency|json_encode nofilter};
 const clientpassword = {$smarty.request.clientpassword|json_encode nofilter};
 const registrar = {$registrar|json_encode nofilter};
 let domains = {$smarty.request.domains|json_encode nofilter}.replace(/\r\n/g, "\n").split("\n");
+const errorInvalidDomain = {$_lang.domainnameinvaliderror|json_encode nofilter};
+const errorImportNothing = {$_lang.nothingtoimporterror|json_encode nofilter};
+
 {literal}
 let data = {gateway, currency, clientpassword, registrar, action:'importsingle'};
 
@@ -36,7 +39,6 @@ $(document).ready(() => {
         })
         .then((d) => {
             //successful http communication, use returned result for output
-            console.dir(d);
             showResultContinue(d);
         }, (d) => {
             //failed http communication, show error
@@ -52,13 +54,13 @@ $(document).ready(() => {
             return false;
         }
         if (!/^[a-zA-Z0-9\-\.]+\.[a-zA-Z0-9\-\.]+$/.test(domain)){
-            $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="label label-danger" role="alert">Invalid domain name</span></td></tr>`);
+            $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="label label-danger" role="alert">${errorInvalidDomain}</span></td></tr>`);
             return false;
         }
         return true;
     });
     if (!domains.length){
-        $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">Nothing to import ...</span></td></tr>`);
+        $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">${errorImportNothing}</span></td></tr>`);
         return;
     }
     importDomain();

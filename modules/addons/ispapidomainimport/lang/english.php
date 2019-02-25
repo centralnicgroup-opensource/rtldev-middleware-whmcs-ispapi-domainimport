@@ -21,6 +21,7 @@ $_ADDONLANG['noblankpassworderror'] = "Provide a password for clients that will 
 $_ADDONLANG['passwordcharseterror'] = "We only accept numerics and lower-/uppercase alphabetics as character set for the client password.";
 $_ADDONLANG['nodomainsfounderror'] = "The query did not return any domains names.";
 $_ADDONLANG['domainsfound'] = "The query returned the below domain names.";
+$_ADDONLANG['nothingtoimporterror'] = "Nothing to import.";
 
 // labels
 $_ADDONLANG['label.domain'] = "Domain";
@@ -41,6 +42,7 @@ $_ADDONLANG['bttn.back'] = "Back";
 // columns
 $_ADDONLANG['col.domain'] = "Domain";
 $_ADDONLANG['col.importresult'] = "Import Result";
+$_ADDONLANG['col.left'] = "Left";
 
 // titles
 $_ADDONLANG['title.pwcharset'] = "Use numerics, lower-/uppercase alphabetics";

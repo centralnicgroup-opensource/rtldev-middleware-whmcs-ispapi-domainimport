@@ -9,7 +9,7 @@
     </tbody>
     <tfoot>
         <tr>
-            <td colspan="2"><b>Left</b> <span id="counterleft">0</span></td>
+            <td colspan="2"><b>{$_lang['col.left']}</b> <span id="counterleft">0</span></td>
         </tr>
     </tfoot>
 </table>

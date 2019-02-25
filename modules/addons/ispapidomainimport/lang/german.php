@@ -21,6 +21,7 @@ $_ADDONLANG['noblankpassworderror'] = "Bitte geben Sie ein Passwort für Neukund
 $_ADDONLANG['passwordcharseterror'] = "Wir aktzeptieren nur Zahlen und Klein-/Großbuchstaben als Zeichensatz für das Neukundenpasswort.";
 $_ADDONLANG['nodomainsfounderror'] = "Die Abfrage lieferte keine Treffer.";
 $_ADDONLANG['domainsfound'] = "Die Abfrage lieferte folgende Domainnamen.";
+$_ADDONLANG['nothingtoimporterror'] = "Nichts zum Importieren.";
 
 // labels
 $_ADDONLANG['label.domain'] = "Domain";
@@ -41,6 +42,7 @@ $_ADDONLANG['bttn.back'] = "Zurück";
 // columns
 $_ADDONLANG['col.domain'] = "Domain";
 $_ADDONLANG['col.importresult'] = "Ergbnis des Imports";
+$_ADDONLANG['col.left'] = "Offen";
 
 // titles
 $_ADDONLANG['title.pwcharset'] = "Erlaubt sind Zahlen, Klein- und Großbuchstaben des Alphabets";
