@@ -1,7 +1,6 @@
 <?php
 
 namespace WHMCS\Module\Addon\IspapiDomainImport\Admin;
-
 use ISPAPISSL\Helper;
 
 /**
@@ -214,7 +213,8 @@ class Controller
         if (!($r["CODE"] == 200)) {
             return array(
                 success => false,
-                msgid => $r["DESCRIPTION"]
+                msgid => null,
+                msg => $r["DESCRIPTION"]
             );
         }
         $registrant = $r["PROPERTY"]["OWNERCONTACT"][0];
@@ -345,7 +345,7 @@ class Controller
     }
 
     /**
-     * import action. import the list of submitted domains.
+     * import action. trigger import of domain list through javascript.
      *
      * @param array $vars Module configuration parameters
      * @param Smarty $smarty Smarty template instance
@@ -368,30 +368,36 @@ class Controller
                 $smarty->fetch('bttn_back.tpl')
             );
         }
-        // build list of domains from POST data
-        $domains = array();
-        foreach (explode("\n", $_REQUEST["domains"]) as $domain) {
-            if (preg_match('/([a-zA-Z0-9\-\.]+)/', $domain, $m)) {
-                $domains[] = $m[1];
-            }
+        // import logic done on jscript-side
+        return $smarty->fetch('import.tpl');
+    }
+
+    /**
+     * importsingle action. import a signle domain.
+     *
+     * @param array $vars Module configuration parameters
+     * @param Smarty $smarty Smarty template instance
+     *
+     * @return string html code
+     */
+    public function importsingle($vars, $smarty)
+    {
+        header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
+		header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+		header('Content-type: application/json; charset=utf-8');
+
+        $contacts = array();
+        $result = $this->importDomain(
+            $_REQUEST["domain"],
+            $_REQUEST["registrar"],
+            $_REQUEST["gateway"],
+            $_REQUEST["currency"],
+            $_REQUEST["clientpassword"],
+            $contacts
+        );
+        if ($result["msgid"]){
+            $result["msg"] = $vars["_lang"][$result["msgid"]];
         }
-        // perfom import and show result
-        $html = $smarty->fetch("import_header.tpl");
-        if (!empty($domains)) {
-            $gateway = $_REQUEST["gateway"];
-            $currency = $_REQUEST["currency"];
-            $password = $_REQUEST["clientpassword"];
-            $registrar = $smarty->getTemplateVars('registrar');
-            $contacts = array();
-            foreach ($domains as $domain) {
-                $smarty->assign("domain", $domain);
-                $smarty->assign("result", $this->importDomain($domain, $registrar, $gateway, $currency, $password, $contacts));
-                $html .= $smarty->fetch('import_result.tpl');
-                //ob_flush();
-                //flush();
-            }
-        }
-        $html .= $smarty->fetch('import_footer.tpl');
-        return $html;
+        die(json_encode($result));
     }
 }
