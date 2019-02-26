@@ -1,3 +1,8 @@
+<div class="progress">
+  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="counterleft">0%</div>
+</div>
+<div id="inprogress"></div>
+
 <table class="table table-condensed">
     <thead>
         <tr>
@@ -7,12 +12,7 @@
     </thead>
     <tbody id="importresults">
     </tbody>
-    <tfoot>
-        <tr>
-            <td colspan="2"><b>{$_lang['col.left']}</b> <span id="counterleft">0</span></td>
-        </tr>
-    </tfoot>
 </table>
 {include file='bttn_back.tpl'}
-{include file='spinner.css.tpl'}
+{include file='css.tpl'}
 {include file='import.js.tpl'}

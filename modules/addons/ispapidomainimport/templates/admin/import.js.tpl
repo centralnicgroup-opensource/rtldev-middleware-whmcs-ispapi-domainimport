@@ -10,20 +10,27 @@ const errorInvalidDomain = {$_lang.domainnameinvaliderror|json_encode nofilter};
 const errorImportNothing = {$_lang.nothingtoimporterror|json_encode nofilter};
 
 {literal}
+let lenOrginal;
 let data = {gateway, currency, clientpassword, registrar, action:'importsingle'};
 
 $(document).ready(() => {
     const showResultContinue = (res) => {
+        // update progress bar
+        const lenNow = domains.length;
+        const progress = lenOrginal - lenNow;
+        const html = `${Math.round(progress / (lenOrginal / 100))}%`;
+        $('#counterleft')
+            .html(html)
+            .css('width', html)
+            .attr('aria-valuenow', progress);
+        // output last import result
         $(`td.result:last`).html(`<span class="label label-${res.success ? 'success' : 'danger'}" role="alert">${res.msg}</span>`);
+        // continue importing domains
         importDomain();
     };
     const importDomain = () => {
-        $('#counterleft').html(domains.length);
-        const eL = $(`td.result:last`);
-        if (eL.length){
-            eL.parent().get(0).scrollIntoView();
-        }
         if (!domains.length){
+            $("#inprogress").css("display", "none");
             return;
         }
         const domain = domains.shift();
@@ -34,6 +41,7 @@ $(document).ready(() => {
             type: 'POST',
             beforeSend: () => {
                 //create line with spinner icon before import request will be sent
+                $("#inprogress").html(`Importing <b>${domain}</b> ...`);
                 $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></td></tr>`);
             }
         })
@@ -63,6 +71,8 @@ $(document).ready(() => {
         $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">${errorImportNothing}</span></td></tr>`);
         return;
     }
+    lenOrginal = domains.length;
+    $('#counterleft').attr('aria-valuemax', lenOrginal);
     importDomain();
 });
 {/literal}

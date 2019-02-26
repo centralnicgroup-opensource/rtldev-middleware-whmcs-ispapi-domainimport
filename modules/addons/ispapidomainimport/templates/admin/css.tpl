@@ -11,4 +11,7 @@
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
 }
+#inprogress {
+    margin: 10px 10px 20px 0px;
+}
 </style>
