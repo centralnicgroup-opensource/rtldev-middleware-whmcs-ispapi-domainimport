@@ -3,7 +3,7 @@
 </div>
 <div id="inprogress"></div>
 
-<table class="table table-condensed">
+<table class="table table-condensed small">
     <thead>
         <tr>
             <th width="30%">{$_lang['col.domain']}</th>
