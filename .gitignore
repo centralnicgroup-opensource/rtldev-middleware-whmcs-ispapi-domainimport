@@ -1,5 +1,6 @@
 # PHPUnit
 phpunit.xml
+.phpunit.result.cache
 
 # Composer
 composer.phar
