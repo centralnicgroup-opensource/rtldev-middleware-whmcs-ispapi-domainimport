@@ -16,11 +16,11 @@ if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
 if (defined("ROOTDIR")) {
-    require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","LoadRegistrars.class.php")));
-    require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","servers","ispapissl","lib","Helper.class.php")));
+    require_once(implode(DIRECTORY_SEPARATOR, array(".", "lib", "vendor", "LoadRegistrars.class.php")));
+    require_once(implode(DIRECTORY_SEPARATOR, array(".", "lib", "vendor", "Helper.class.php")));
 }
-use ISPAPISSL\LoadRegistrars;
-use ISPAPISSL\Helper;
+use ISPAPI\LoadRegistrars;
+use ISPAPI\Helper;
 
 /**
  * Define addon module configuration parameters.
