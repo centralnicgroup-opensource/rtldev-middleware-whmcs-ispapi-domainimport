@@ -1,0 +1,117 @@
+{
+  "name": "whmcs-ispapi-domainimport",
+  "description": "WHMCS ISPAPI Addon Module for Domain Import from HEXONET system",
+  "version": "0.0.0-development",
+  "private": true,
+  "author": {
+    "name": "Kai Schwarz",
+    "email": "kschwarz@hexonet.net"
+  },
+  "license": "MIT",
+  "engines": {
+    "node": ">=8.3.0"
+  },
+  "homepage": "https://github.com/hexonet/whmcs-ispapi-domainimport",
+  "repository": "github:hexonet/whmcs-ispapi-domainimport",
+  "bugs": "https://github.com/hexonet/whmcs-ispapi-domainimport/issues",
+  "maintainers": [
+    {
+      "name": "Kai Schwarz",
+      "url": "https://github.com/papakai"
+    },
+    {
+      "name": "Anthony Schneider",
+      "url": "https://github.com/anthonyschn"
+    },
+    {
+      "name": "Tulasi Seelamkurthi",
+      "url": "https://github.com/tulsi91"
+    }
+  ],
+  "keywords": [
+    "whmcs",
+    "web host automation platform",
+    "ssl module",
+    "hexonet",
+    "ispapi",
+    "domain",
+    "isp",
+    "ssl",
+    "cert",
+    "dns",
+    "backorder",
+    "premium",
+    "preregistration",
+    "registration",
+    "application"
+  ],
+  "devDependencies": {
+    "@semantic-release/changelog": "3.0.2",
+    "@semantic-release/commit-analyzer": "6.0.1",
+    "@semantic-release/exec": "3.3.2",
+    "@semantic-release/git": "7.0.8",
+    "@semantic-release/github": "5.2.10",
+    "conventional-changelog": "3.0.6",
+    "semantic-release": "^15.13.3",
+    "travis-deploy-once": "^5.0.9"
+  },
+  "release": {
+    "debug": false,
+    "analyzeCommits": {
+      "preset": "angular"
+    },
+    "generateNotes": {
+      "preset": "angular"
+    },
+    "verifyConditions": [
+      "@semantic-release/changelog",
+      "@semantic-release/git",
+      "@semantic-release/github"
+    ],
+    "prepare": [
+      {
+        "path": "@semantic-release/changelog",
+        "changelogFile": "HISTORY.md"
+      },
+      {
+        "path": "@semantic-release/exec",
+        "cmd": "./updateVersion.sh ${nextRelease.version} ${options.branch}"
+      },
+      {
+        "path": "@semantic-release/exec",
+        "cmd": "make allarchives"
+      },
+      {
+        "path": "@semantic-release/git",
+        "assets": [
+          "HISTORY.md",
+          "package.json",
+          "composer.json",
+          "modules/addons/ispapidomainimport/ispapidomainimport.php",
+          "whmcs-ispapi-domainimport-latest.zip",
+          "release.json"
+        ],
+        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
+      }
+    ],
+    "publish": [
+      {
+        "path": "@semantic-release/github",
+        "assets": [
+          {
+            "label": "WHMCS Module (zip)",
+            "path": "pkg/whmcs-ispapi-domainimport.zip"
+          },
+          {
+            "label": "WHMCS Module (tar.gz)",
+            "path": "pkg/whmcs-ispapi-domainimport.tar.gz"
+          }
+        ]
+      }
+    ]
+  },
+  "scripts": {
+    "semantic-release": "semantic-release",
+    "travis-deploy-once": "travis-deploy-once"
+  }
+}

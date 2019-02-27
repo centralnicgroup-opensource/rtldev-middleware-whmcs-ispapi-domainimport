@@ -10,11 +10,9 @@
  * @license https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/LICENSE/ MIT License
  */
 
-use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
+$module_version = "0.0.1";
 
-if (!defined("WHMCS")) {
-    die("This file cannot be accessed directly");
-}
+use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
 require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "LoadRegistrars.class.php")));
 require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "Helper.class.php")));
 use ISPAPI\LoadRegistrars;
@@ -37,6 +35,8 @@ use ISPAPI\Helper;
  */
 function ispapidomainimport_config()
 {
+    global $module_version;
+
     return [
         // Display name for your module
         'name' => 'ISPAPI Domain Import',
@@ -47,7 +47,8 @@ function ispapidomainimport_config()
         // Default language
         'language' => 'english',
         // Version number
-        'version' => '1.0',
+        'version' => $module_version,
+        // fields
         'fields' => []
     ];
 }
