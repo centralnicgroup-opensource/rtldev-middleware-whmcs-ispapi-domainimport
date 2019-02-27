@@ -10,7 +10,7 @@
  * @license https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/LICENSE/ MIT License
  */
 
-$module_version = "0.0.1";
+$module_version = "1.0.0";
 
 use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
 require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "LoadRegistrars.class.php")));
