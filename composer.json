@@ -51,7 +51,7 @@
     "scripts": {
         "codeCheck": "./modules/addons/ispapidomainimport/lib/vendor/bin/phpcs --standard=PSR2 -q -n --colors --ignore=*/vendor/* modules tests",
         "codeFix": "./modules/addons/ispapidomainimport/lib/vendor/bin/phpcbf --standard=PSR2 -q --ignore=*/vendor/* modules tests",
-        "test": "./modules/addons/ispapidomainimport/lib/vendor/bin/phpunit"
+        "test": "./modules/addons/ispapidomainimport/lib/vendor/bin/phpunit --configuration phpunit.xml"
     },
     "config": {
         "vendor-dir": "./modules/addons/ispapidomainimport/lib/vendor"
