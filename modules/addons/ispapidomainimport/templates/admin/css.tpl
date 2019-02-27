@@ -11,7 +11,16 @@
     from { transform: scale(1) rotate(0deg);}
     to { transform: scale(1) rotate(360deg);}
 }
-#inprogress {
-    margin: 10px 10px 20px 0px;
+table.scrollable {
+    width: auto;
+}
+table.scrollable thead {
+    display: block;
+}
+table.scrollable tbody {
+    display: block;
+    height: 400px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 </style>

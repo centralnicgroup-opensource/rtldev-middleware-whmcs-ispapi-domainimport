@@ -20,20 +20,20 @@ class Controller
     public function index($vars, $smarty)
     {
         // get payment gateways
-        $gateways = $this->getPaymentGateways();
+        $gateways = Helper::getPaymentGateways();
         if (empty($gateways)) {
             $smarty->assign('error', $vars["_lang"]["nogatewayerror"]);
             return $smarty->fetch('error.tpl');
         }
         $smarty->assign('gateways', $gateways);
         $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
-        $smarty->assign('currencies', $this->getCurrencies());
+        $smarty->assign('currencies', Helper::getCurrencies());
         $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
         if (!isset($_REQUEST["domain"])) {
             $_REQUEST["domain"] = "*";
         }
         if (empty($_REQUEST["clientpassword"])) {
-            $_REQUEST["clientpassword"] = $this->generateRandomString();
+            $_REQUEST["clientpassword"] = Helper::generateRandomString();
         }
         // show form
         return $smarty->fetch('index.tpl');
@@ -87,7 +87,7 @@ class Controller
                 $smarty->fetch('bttn_back.tpl')
             );
         }
-        if (!preg_match("/^[" . $this->stringCharset . "]+$/", $_REQUEST["clientpassword"])) {
+        if (!preg_match("/^[" . Helper::$stringCharset . "]+$/", $_REQUEST["clientpassword"])) {
             $smarty->assign('error', $vars["_lang"]['passwordcharseterror']);
             return (
                 $smarty->fetch('error.tpl') .
@@ -113,7 +113,7 @@ class Controller
         header('Content-type: application/json; charset=utf-8');
 
         $contacts = array();
-        $result = $this->importDomain(
+        $result = Helper::importDomain(
             $_REQUEST["domain"],
             $_REQUEST["registrar"],
             $_REQUEST["gateway"],

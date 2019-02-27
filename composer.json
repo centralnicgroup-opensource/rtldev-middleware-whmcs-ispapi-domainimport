@@ -1,5 +1,5 @@
 {
-    "name": "whmcs/whmcs-ispapi-domainimport",
+    "name": "hexonet/whmcs-ispapi-domainimport",
     "description": "WHMCS ISPAPI Addon Module for Domain Import from HEXONET system",
     "keywords": [
         "whmcs",
@@ -34,8 +34,15 @@
         "issues": "https://github.com/hexonet/whmcs-ispapi-domainimport/issues",
         "source": "https://github.com/hexonet/whmcs-ispapi-domainimport"
     },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "https://github.com/hexonet/whmcs-ispapi-helper.git"
+        }
+    ],
     "require": {
-        "php": ">=5.6.0"
+        "php": ">=5.6.0",
+        "hexonet/whmcs-ispapi-helper": "1.0.5"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable",

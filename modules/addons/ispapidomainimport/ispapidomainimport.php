@@ -15,10 +15,8 @@ use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
 if (!defined("WHMCS")) {
     die("This file cannot be accessed directly");
 }
-if (defined("ROOTDIR")) {
-    require_once(implode(DIRECTORY_SEPARATOR, array(".", "lib", "vendor", "LoadRegistrars.class.php")));
-    require_once(implode(DIRECTORY_SEPARATOR, array(".", "lib", "vendor", "Helper.class.php")));
-}
+require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "LoadRegistrars.class.php")));
+require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "Helper.class.php")));
 use ISPAPI\LoadRegistrars;
 use ISPAPI\Helper;
 
@@ -71,8 +69,8 @@ function ispapidomainimport_output($vars)
     $smarty->setCompileDir($GLOBALS['templates_compiledir']);
     $smarty->setTemplateDir(implode(DIRECTORY_SEPARATOR, array(".", "..", "modules", "addons", "ispapidomainimport", "templates", "admin")));
     if (empty($registrars)) {
-        $vars["smarty"]->assign("error", $vars["_lang"]["registrarerror"]);
-        $vars["smarty"]->display('error.tpl');
+        $smarty->assign("error", $vars["_lang"]["registrarerror"]);
+        $smarty->display('error.tpl');
         return;
     }
     $smarty->assign($vars);

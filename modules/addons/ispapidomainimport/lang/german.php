@@ -26,7 +26,7 @@ $_ADDONLANG['nothingtoimporterror'] = "Nichts zum Importieren.";
 // labels
 $_ADDONLANG['label.domain'] = "Domain";
 $_ADDONLANG['label.domains'] = "Domains";
-$_ADDONLANG['label.gateway'] = "Zahlungssystem";
+$_ADDONLANG['label.gateway'] = "Zahlungsweise";
 $_ADDONLANG['label.currency'] = "Währung";
 $_ADDONLANG['label.clientpassword'] = "Passwort für Neukunden";
 
@@ -46,3 +46,7 @@ $_ADDONLANG['col.left'] = "Offen";
 
 // titles
 $_ADDONLANG['title.pwcharset'] = "Erlaubt sind Zahlen, Klein- und Großbuchstaben des Alphabets";
+
+// status
+$_ADDONLANG['status.importing'] = "Importiere";
+$_ADDONLANG['status.importdone'] = "Import abgeschlossen";

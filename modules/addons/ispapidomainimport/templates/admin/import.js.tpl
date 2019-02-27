@@ -6,14 +6,27 @@ const currency = {$smarty.request.currency|json_encode nofilter};
 const clientpassword = {$smarty.request.clientpassword|json_encode nofilter};
 const registrar = {$registrar|json_encode nofilter};
 let domains = {$smarty.request.domains|json_encode nofilter}.replace(/\r\n/g, "\n").split("\n");
-const errorInvalidDomain = {$_lang.domainnameinvaliderror|json_encode nofilter};
-const errorImportNothing = {$_lang.nothingtoimporterror|json_encode nofilter};
+const lang = {$_lang|json_encode nofilter};
 
 {literal}
 let lenOrginal;
 let data = {gateway, currency, clientpassword, registrar, action:'importsingle'};
 
 $(document).ready(() => {
+    // Adjust the width of thead cells with width of tbody cells when window resizes
+    $(window).resize(function() {
+        const $table = $('table.scrollable');
+        const $bodyCells = $table.find('tbody tr:first').children();
+        const colWidth = $bodyCells.map(function() {
+            return $(this).width();
+        }).get();
+        if (colWidth.length){
+            $table.find('thead tr').children().each(function(i, v) {
+                $(v).width(colWidth[i]);
+            });
+        }
+    });
+
     const showResultContinue = (res) => {
         // update progress bar
         const lenNow = domains.length;
@@ -25,12 +38,13 @@ $(document).ready(() => {
             .attr('aria-valuenow', progress);
         // output last import result
         $(`td.result:last`).html(`<span class="label label-${res.success ? 'success' : 'danger'}" role="alert">${res.msg}</span>`);
+        $(window).resize();
         // continue importing domains
         importDomain();
     };
     const importDomain = () => {
         if (!domains.length){
-            $("#inprogress").css("display", "none");
+            $("#inprogress").html(`${lang["status.importdone"]}.`);
             return;
         }
         const domain = domains.shift();
@@ -41,8 +55,9 @@ $(document).ready(() => {
             type: 'POST',
             beforeSend: () => {
                 //create line with spinner icon before import request will be sent
-                $("#inprogress").html(`Importing <b>${domain}</b> ...`);
+                $("#inprogress").html(`${lang["status.importing"]} <b>${domain}</b> ...`);
                 $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></td></tr>`);
+                $(window).resize();
             }
         })
         .then((d) => {
@@ -62,13 +77,15 @@ $(document).ready(() => {
             return false;
         }
         if (!/^[a-zA-Z0-9\-\.]+\.[a-zA-Z0-9\-\.]+$/.test(domain)){
-            $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="label label-danger" role="alert">${errorInvalidDomain}</span></td></tr>`);
+            $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="label label-danger" role="alert">${lang.domainnameinvaliderror}</span></td></tr>`);
+            $(window).resize();
             return false;
         }
         return true;
     });
     if (!domains.length){
-        $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">${errorImportNothing}</span></td></tr>`);
+        $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">${lang.nothingtoimporterror}</span></td></tr>`);
+        $(window).resize();
         return;
     }
     lenOrginal = domains.length;
