@@ -51,7 +51,7 @@
     "scripts": {
         "codeCheck": "phpcs --standard=PSR2 -q -n --colors --ignore=*/vendor/* modules tests",
         "codeFix": "phpcbf --standard=PSR2 -q --ignore=*/vendor/* modules tests",
-        "test": "pwd && phpunit -c phpunit.xml"
+        "test": "phpunit -c \"$(pwd)\"/phpunit.xml"
     },
     "config": {
         "vendor-dir": "./modules/addons/ispapidomainimport/lib/vendor"
