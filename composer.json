@@ -49,9 +49,9 @@
         "squizlabs/php_codesniffer": "^3.3"
     },
     "scripts": {
-        "codeCheck": "phpcs --standard=PSR2 -q -n --colors --ignore=*/vendor/* modules tests",
-        "codeFix": "phpcbf --standard=PSR2 -q --ignore=*/vendor/* modules tests",
-        "test": "phpunit"
+        "codeCheck": "./modules/addons/ispapidomainimport/lib/vendor/bin/phpcs --standard=PSR2 -q -n --colors --ignore=*/vendor/* modules tests",
+        "codeFix": "./modules/addons/ispapidomainimport/lib/vendor/bin/phpcbf --standard=PSR2 -q --ignore=*/vendor/* modules tests",
+        "test": "./modules/addons/ispapidomainimport/lib/vendor/bin/phpunit"
     },
     "config": {
         "vendor-dir": "./modules/addons/ispapidomainimport/lib/vendor"
