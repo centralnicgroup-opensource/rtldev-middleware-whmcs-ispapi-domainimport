@@ -2,7 +2,7 @@
 
 namespace WHMCS\Module\Addon\IspapiDomainImport\Admin;
 
-use ISPAPI\Helper;
+use ISPAPINEW\Helper;
 
 /**
  * Admin Area Controller
