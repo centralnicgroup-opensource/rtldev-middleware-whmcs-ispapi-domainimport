@@ -5,9 +5,9 @@ clean:
 	rm -rf $(FOLDER)
 
 buildsources:
-	mkdir -p $(FOLDER)/install/modules/addons
-	cp -a modules/addons/ispapidomainimport $(FOLDER)/install/modules/addons
-	rm -rf $(FOLDER)/install/modules/addons/ispapidomainimport/lib/vendor/hexonet/whmcs-ispapi-helper/.git
+	mkdir -p $(FOLDER)
+	cp -R modules/addons/ispapidomainimport/* $(FOLDER)
+	rm -rf $(FOLDER)/lib/vendor/hexonet/whmcs-ispapi-helper/.git
 	cp README.md HISTORY.md CONTRIBUTING.md LICENSE $(FOLDER)
 
 buildlatestzip:
