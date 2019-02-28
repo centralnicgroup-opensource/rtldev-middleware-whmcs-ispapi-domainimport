@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.0.1...v1.0.2) (2019-02-28)
+
+
+### Bug Fixes
+
+* **Makefile:** review archive structure ([fe2d214](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/fe2d214))
+
 ## [1.0.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.0.0...v1.0.1) (2019-02-28)
 
 
