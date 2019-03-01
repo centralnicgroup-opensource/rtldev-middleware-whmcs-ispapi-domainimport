@@ -1,5 +1,4 @@
 language: php
-sudo: false
 dist: trusty
 notifications:
   email:
@@ -21,7 +20,7 @@ cache:
   - node_modules
 before_install:
   wget https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
-  dpkg -i pandoc-2.6-1-amd64.deb
+  sudo dpkg -i pandoc-2.6-1-amd64.deb
 install:
 - composer install --dev
 script:
