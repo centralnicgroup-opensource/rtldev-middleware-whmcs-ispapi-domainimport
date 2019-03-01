@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.0.2...v1.1.0) (2019-03-01)
+
+
+### Features
+
+* **docs:** add HTML Documentation to archives ([c3ff4c1](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/c3ff4c1))
+
 ## [1.0.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.0.1...v1.0.2) (2019-02-28)
 
 
