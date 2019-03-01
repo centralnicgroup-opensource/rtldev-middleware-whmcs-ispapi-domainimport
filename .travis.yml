@@ -19,8 +19,10 @@ cache:
   directories:
   - "~/.npm"
   - node_modules
+before_install:
+  wget https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
+  dpkg -i pandoc-2.6-1-amd64.deb
 install:
-- sudo apt-get install pandoc
 - composer install --dev
 script:
 - composer run-script codeCheck
