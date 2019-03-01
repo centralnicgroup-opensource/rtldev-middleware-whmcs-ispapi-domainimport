@@ -20,6 +20,7 @@ cache:
   - "~/.npm"
   - node_modules
 install:
+- sudo apt-get install pandoc
 - composer install --dev
 script:
 - composer run-script codeCheck
