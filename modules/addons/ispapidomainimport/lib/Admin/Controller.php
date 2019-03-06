@@ -32,9 +32,6 @@ class Controller
         if (!isset($_REQUEST["domain"])) {
             $_REQUEST["domain"] = "*";
         }
-        if (empty($_REQUEST["clientpassword"])) {
-            $_REQUEST["clientpassword"] = Helper::generateRandomString();
-        }
         // show form
         return $smarty->fetch('index.tpl');
     }
@@ -80,20 +77,6 @@ class Controller
      */
     public function import($vars, $smarty)
     {
-        if (empty($_REQUEST["clientpassword"])) {
-            $smarty->assign('error', $vars["_lang"]['noblankpassworderror']);
-            return (
-                $smarty->fetch('error.tpl') .
-                $smarty->fetch('bttn_back.tpl')
-            );
-        }
-        if (!preg_match("/^[" . Helper::$stringCharset . "]+$/", $_REQUEST["clientpassword"])) {
-            $smarty->assign('error', $vars["_lang"]['passwordcharseterror']);
-            return (
-                $smarty->fetch('error.tpl') .
-                $smarty->fetch('bttn_back.tpl')
-            );
-        }
         // import logic done on jscript-side
         return $smarty->fetch('import.tpl');
     }
@@ -118,7 +101,7 @@ class Controller
             $_REQUEST["registrar"],
             $_REQUEST["gateway"],
             $_REQUEST["currency"],
-            $_REQUEST["clientpassword"],
+            Helper::generateRandomString(),
             $contacts
         );
         if ($result["msgid"]) {

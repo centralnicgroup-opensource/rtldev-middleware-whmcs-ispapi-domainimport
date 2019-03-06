@@ -3,14 +3,13 @@
 const url = "{$modulelink}";
 const gateway = {$smarty.request.gateway|json_encode nofilter};
 const currency = {$smarty.request.currency|json_encode nofilter};
-const clientpassword = {$smarty.request.clientpassword|json_encode nofilter};
 const registrar = {$registrar|json_encode nofilter};
 let domains = {$smarty.request.domains|json_encode nofilter}.replace(/\r\n/g, "\n").split("\n");
 const lang = {$_lang|json_encode nofilter};
 
 {literal}
 let lenOrginal;
-let data = {gateway, currency, clientpassword, registrar, action:'importsingle'};
+let data = {gateway, currency, registrar, action:'importsingle'};
 
 $(document).ready(() => {
     // Adjust the width of thead cells with width of tbody cells when window resizes

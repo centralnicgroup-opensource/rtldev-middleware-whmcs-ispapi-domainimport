@@ -17,8 +17,6 @@ $_ADDONLANG['alreadyexistingerror'] = "Domain existiert bereits.";
 $_ADDONLANG['domainnameinvaliderror'] = "Ungültiger Domainname.";
 $_ADDONLANG['nogatewayerror'] = "Kein Zahlungssystem konfiguriert.";
 $_ADDONLANG['domainlistfetcherror'] = "Domainliste konnte nicht geladen werden.";
-$_ADDONLANG['noblankpassworderror'] = "Bitte geben Sie ein Passwort für Neukunden an, die während des Imports erzeugt werden. Aus Sicherheitsgründen ist ein leeres Passwort nicht erlaubt.";
-$_ADDONLANG['passwordcharseterror'] = "Wir aktzeptieren nur Zahlen und Klein-/Großbuchstaben als Zeichensatz für das Neukundenpasswort.";
 $_ADDONLANG['nodomainsfounderror'] = "Die Abfrage lieferte keine Treffer.";
 $_ADDONLANG['domainsfound'] = "Die Abfrage lieferte folgende Domainnamen.";
 $_ADDONLANG['nothingtoimporterror'] = "Nichts zum Importieren.";
@@ -28,11 +26,9 @@ $_ADDONLANG['label.domain'] = "Domain";
 $_ADDONLANG['label.domains'] = "Domains";
 $_ADDONLANG['label.gateway'] = "Zahlungsweise";
 $_ADDONLANG['label.currency'] = "Währung";
-$_ADDONLANG['label.clientpassword'] = "Passwort für Neukunden";
 
 // placeholders
 $_ADDONLANG['ph.domainfilter'] = "Filter für Domainnamen eingeben";
-$_ADDONLANG['ph.clientpassword'] = "Password angeben";
 
 // buttons
 $_ADDONLANG['bttn.pulldomainlist'] = "Domains auflisten";
@@ -43,9 +39,6 @@ $_ADDONLANG['bttn.back'] = "Zurück";
 $_ADDONLANG['col.domain'] = "Domain";
 $_ADDONLANG['col.importresult'] = "Ergbnis des Imports";
 $_ADDONLANG['col.left'] = "Offen";
-
-// titles
-$_ADDONLANG['title.pwcharset'] = "Erlaubt sind Zahlen, Klein- und Großbuchstaben des Alphabets";
 
 // status
 $_ADDONLANG['status.importing'] = "Importiere";
