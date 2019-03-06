@@ -1,3 +1,12 @@
+## [1.1.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.1.0...v1.1.1) (2019-03-01)
+
+
+### Bug Fixes
+
+* **pandoc:** fix travis ci configuration ([cfc148a](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/cfc148a))
+* **pandoc:** review travis cfg ([6fb0c16](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/6fb0c16))
+* **pandoc:** switch from apt installation to dpkg ([4838257](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/4838257))
+
 # [1.1.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.0.2...v1.1.0) (2019-03-01)
 
 
