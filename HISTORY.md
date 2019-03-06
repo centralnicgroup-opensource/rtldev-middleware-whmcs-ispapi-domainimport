@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.1.1...v1.2.0) (2019-03-06)
+
+
+### Features
+
+* **client:** import now generates random passwords per client ([c5f943c](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/c5f943c))
+
 ## [1.1.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.1.0...v1.1.1) (2019-03-01)
 
 
