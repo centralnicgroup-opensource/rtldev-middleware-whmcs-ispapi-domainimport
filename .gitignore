@@ -9,3 +9,6 @@ composer.lock
 
 # pkg
 pkg
+
+# npm
+node_modules
