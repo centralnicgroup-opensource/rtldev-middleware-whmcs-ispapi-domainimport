@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.2.0...v1.3.0) (2019-03-08)
+
+
+### Features
+
+* **CI:** auto-add new version on WHMCS Marketplace ([08e5b61](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/08e5b61))
+
 # [1.2.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.1.1...v1.2.0) (2019-03-06)
 
 
