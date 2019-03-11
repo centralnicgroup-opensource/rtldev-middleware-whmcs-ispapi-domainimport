@@ -14,12 +14,6 @@ const submitForm = async (page, selector, skipWait) => {
     return page.waitForNavigation({ waitUntil: 'networkidle2' });
 };
 
-const waitForSelector = async (page, selector) => {
-    const eL = await page.waitForSelector(selector, { timeout: 10000, visible: true });
-    await eL.focus(selector);
-    return Promise.resolve(eL);
-};
-
 (async () => {
     let url = 'https://marketplace.whmcs.com/user/login';
     const browser = await puppeteer.launch({
@@ -48,6 +42,7 @@ const waitForSelector = async (page, selector) => {
     const month = date.getMonth() + 1;
     //tt.mm.jjjj
     //but for any reason we need to provide mm.tt.jjjj when doing it though puppeteer
+    //tt.mm.jjjj in non-headless mode mm.tt.jjjj otherwise? lol?
     await page.type(selector, `${month < 10 ? '0' : ''}${month}.${day < 10 ? '0' : ''}${day}.${date.getFullYear()}`);
     selector = '#description';
     await page.type(selector, changelog);
