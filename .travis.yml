@@ -22,7 +22,7 @@ before_install:
 - wget https://github.com/jgm/pandoc/releases/download/2.6/pandoc-2.6-1-amd64.deb
 - sudo dpkg -i pandoc-2.6-1-amd64.deb
 install:
-- composer install --dev
+- composer install
 script:
 - composer run-script codeCheck
 #- composer run-script test
@@ -33,5 +33,4 @@ after_success:
   && nvm install lts/* 
   && nvm use lts/*
   && npm prune && npm i
-  && composer install --no-dev
   && npx travis-deploy-once "npx semantic-release" ; fi
