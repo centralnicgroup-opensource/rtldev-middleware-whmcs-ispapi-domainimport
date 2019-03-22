@@ -42,7 +42,7 @@
     ],
     "require": {
         "php": ">=5.6.0",
-        "hexonet/whmcs-ispapi-helper": "1.0.6"
+        "hexonet/whmcs-ispapi-helper": "1.3.2"
     },
     "require-dev": {
         "phpunit/phpunit": "@stable",

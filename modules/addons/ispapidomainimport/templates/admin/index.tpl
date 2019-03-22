@@ -15,8 +15,8 @@
         <label for="currency" class="control-label col-sm-2">{$_lang['label.currency']}</label>
         <div class="col-sm-10">
             <select id="currency" name="currency" class="form-control">
-                {foreach from=$currencies key=id item=currency}
-                    <option value="{$id}"{$currency_selected[$id]}>{$currency}</option>
+                {foreach from=$currencies key=currency item=item}
+                    <option value="{$item.id}"{$currency_selected[$item.id]}>{$currency}</option>
                 {/foreach}
             </select>
         </div>

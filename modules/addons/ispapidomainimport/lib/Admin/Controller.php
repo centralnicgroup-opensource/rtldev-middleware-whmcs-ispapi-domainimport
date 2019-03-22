@@ -19,8 +19,7 @@ class Controller
      */
     public function index($vars, $smarty)
     {
-        // get payment gateways
-        $gateways = Helper::getPaymentGateways();
+        $gateways = Helper::getPaymentMethods();
         if (empty($gateways)) {
             $smarty->assign('error', $vars["_lang"]["nogatewayerror"]);
             return $smarty->fetch('error.tpl');
@@ -32,7 +31,6 @@ class Controller
         if (!isset($_REQUEST["domain"])) {
             $_REQUEST["domain"] = "*";
         }
-        // show form
         return $smarty->fetch('index.tpl');
     }
 
