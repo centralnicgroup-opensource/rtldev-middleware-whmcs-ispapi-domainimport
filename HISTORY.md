@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.3.0...v1.3.1) (2019-03-22)
+
+
+### Bug Fixes
+
+* **dep-bump:** whmcs-ispapi-helper@1.3.2, migration to localAPI ([06ad8ba](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/06ad8ba))
+
 # [1.3.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.2.0...v1.3.0) (2019-03-08)
 
 
