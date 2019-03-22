@@ -11,6 +11,7 @@ $_ADDONLANG['actionerror'] = "Invalid action requested. Please go back and try a
 $_ADDONLANG['domaincreateerror'] = "Unable to create domain.";
 $_ADDONLANG['tldrenewalpriceerror'] = "Unable to determinate domain renewal price.";
 $_ADDONLANG['registrantcreateerror'] = "Unable to create client.";
+$_ADDONLANG['registrantcreateerrornophone'] = "Unable to create client (no phone number).";
 $_ADDONLANG['registrantfetcherror'] = "Unable to load registrant data.";
 $_ADDONLANG['registrantmissingerror'] = "Missing Registrant in domain configuration.";
 $_ADDONLANG['alreadyexistingerror'] = "Domain name already exists.";

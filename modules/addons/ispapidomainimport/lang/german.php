@@ -11,6 +11,7 @@ $_ADDONLANG['actionerror'] = "Ungültige Modulaktion. Bitte gehen Sie zurück un
 $_ADDONLANG['domaincreateerror'] = "Domain konnte nicht angelegt werden.";
 $_ADDONLANG['tldrenewalpriceerror'] = "Domainverlängerungspreis konnte nicht ermittelt werden.";
 $_ADDONLANG['registrantcreateerror'] = "Kunde konnte nicht angelegt werden.";
+$_ADDONLANG['registrantcreateerrornophone'] = "Kunde konnte nicht angelegt werden. (keine Telefonnr).";
 $_ADDONLANG['registrantfetcherror'] = "Daten des Registranten konnten nicht geladen werden.";
 $_ADDONLANG['registrantmissingerror'] = "Der Domain ist kein Registrant zugeordnet.";
 $_ADDONLANG['alreadyexistingerror'] = "Domain existiert bereits.";
