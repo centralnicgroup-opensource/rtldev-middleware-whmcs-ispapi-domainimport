@@ -1,3 +1,10 @@
+## [1.3.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.3.1...v1.3.2) (2019-03-22)
+
+
+### Bug Fixes
+
+* **dep-bump:** whmcs-ispapi-helper@1.3.3; add check for empty phone number ([fe974a7](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/fe974a7))
+
 ## [1.3.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.3.0...v1.3.1) (2019-03-22)
 
 
