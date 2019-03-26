@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.3.2...v1.4.0) (2019-03-26)
+
+
+### Features
+
+* **pkg:** move some logic to javascript to improve page load ([2fd9b9d](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/2fd9b9d))
+
 ## [1.3.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.3.1...v1.3.2) (2019-03-22)
 
 
