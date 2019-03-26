@@ -1,1 +1,1 @@
-<span class="label label-danger">{$error}</span>
+<span class="label label-danger resultmsg">{$error}</span>

@@ -1,1 +1,1 @@
-<span class="label label-success">{$msg}</span>
+<span class="label label-success resultmsg">{$msg}</span>

@@ -1,26 +1,22 @@
-<script type="text/javascript">
-<!--
-const url = "{$modulelink}";
-const gateway = {$smarty.request.gateway|json_encode nofilter};
-const currency = {$smarty.request.currency|json_encode nofilter};
-const registrar = {$registrar|json_encode nofilter};
-let domains = {$smarty.request.domains|json_encode nofilter}.replace(/\r\n/g, "\n").split("\n");
-const lang = {$_lang|json_encode nofilter};
-
-{literal}
-let lenOrginal;
-let data = {gateway, currency, registrar, action:'importsingle'};
-
 $(document).ready(() => {
+    let lenOrginal;
+    let form = $('#backform');
+    let domains = form.find('input[name="domains"]').val().split("\n");
+    let data = {
+        gateway: form.find('input[name="gateway"]').val(),
+        currency: form.find('input[name="currency"]').val(),
+        registrar: form.find('input[name="registrar"]').val(),
+        action: 'importsingle'
+    };
     // Adjust the width of thead cells with width of tbody cells when window resizes
-    $(window).resize(function() {
+    $(window).resize(function () {
         const $table = $('table.scrollable');
         const $bodyCells = $table.find('tbody tr:first').children();
-        const colWidth = $bodyCells.map(function() {
+        const colWidth = $bodyCells.map(function () {
             return $(this).width();
         }).get();
-        if (colWidth.length){
-            $table.find('thead tr').children().each(function(i, v) {
+        if (colWidth.length) {
+            $table.find('thead tr').children().each(function (i, v) {
                 $(v).width(colWidth[i]);
             });
         }
@@ -41,25 +37,24 @@ $(document).ready(() => {
         // continue importing domains
         importDomain();
     };
+
     const importDomain = () => {
-        if (!domains.length){
-            $("#inprogress").html(`${lang["status.importdone"]}.`);
+        if (!domains.length) {
+            $("#inprogress").html(`${translate("status.importdone")}.`);
             return;
         }
-        const domain = domains.shift();
-        data.domain = domain;
-        $.ajax(url, {
+        data.domain = domains.shift();
+        $.ajax({
             data,
             dataType: 'json',
             type: 'POST',
             beforeSend: () => {
                 //create line with spinner icon before import request will be sent
-                $("#inprogress").html(`${lang["status.importing"]} <b>${domain}</b> ...`);
-                $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></td></tr>`);
+                $("#inprogress").html(`${translate("status.importing")} <b>${data.domain}</b> ...`);
+                $("#importresults").append(`<tr><td>${data.domain}</td><td class="result"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></td></tr>`);
                 $(window).resize();
             }
-        })
-        .then((d) => {
+        }).then((d) => {
             //successful http communication, use returned result for output
             showResultContinue(d);
         }, (d) => {
@@ -70,27 +65,33 @@ $(document).ready(() => {
             });
         });
     };
+
+    const translate = (translationkey) => {
+        const lang = ISPAPI.lang;
+        if (lang.hasOwnProperty(translationkey)) {
+            return lang[translationkey];
+        }
+        return translationkey;
+    };
+
     domains = domains.filter((domain, idx) => {
         domain = domain.replace(/\s/g, "");
-        if (!domain.length){
+        if (!domain.length) {
             return false;
         }
-        if (!/^[a-zA-Z0-9\-\.]+\.[a-zA-Z0-9\-\.]+$/.test(domain)){
-            $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="label label-danger" role="alert">${lang.domainnameinvaliderror}</span></td></tr>`);
+        if (!/^[a-zA-Z0-9\-\.]+\.[a-zA-Z0-9\-\.]+$/.test(domain)) {
+            $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="label label-danger" role="alert">${translate('domainnameinvaliderror')}</span></td></tr>`);
             $(window).resize();
             return false;
         }
         return true;
     });
-    if (!domains.length){
-        $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">${lang.nothingtoimporterror}</span></td></tr>`);
-        $(window).resize();
-        return;
-    }
+if (!domains.length) {
+    $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">${translate('nothingtoimporterror')}</span></td></tr>`);
+    $(window).resize();
+    return;
+}
     lenOrginal = domains.length;
     $('#counterleft').attr('aria-valuemax', lenOrginal);
     importDomain();
 });
-{/literal}
-//-->
-</script>

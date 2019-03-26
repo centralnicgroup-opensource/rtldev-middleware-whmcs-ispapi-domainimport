@@ -1,3 +1,4 @@
+<link rel="stylesheet" type="text/css" href="/modules/addons/ispapidomainimport/assets/styles.css"/>
 <table class="table table-condensed small scrollable">
     <thead>
         <tr>
@@ -16,6 +17,15 @@
         <div id="inprogress"></div>
     </div>
 </div>
-{include file='bttn_back.tpl'}
-{include file='css.tpl'}
-{include file='import.js.tpl'}
+<br/><br/>
+<form method="POST" id="backform">
+    <input type="hidden" name="gateway" value="{$smarty.request.gateway}" />
+    <input type="hidden" name="registrar" value="{$smarty.request.registrar}" />
+    <input type="hidden" name="currency" value="{$smarty.request.currency}" />
+    <input type="hidden" name="domain" value="{$smarty.request.domain}" />
+    <input type="hidden" name="domains" value="{$smarty.request.domains}" />
+    <input type="hidden" name="action" value="index" />
+    <input type="submit" value="{$_lang["bttn.back"]}" class="btn btn-default" />
+</form>
+<script type="text/javascript" src="/modules/addons/ispapidomainimport/assets/translations.js?{mktime()}"></script>
+<script type="text/javascript" src="/modules/addons/ispapidomainimport/assets/import.js"></script>

@@ -1,6 +1,6 @@
-<form class="form-horizontal" method="POST">
-    <input type="hidden" name="search" id="search" value="1"/>
-    <input type="hidden" name="action" id="action" value="pull"/>
+<form class="form-horizontal" method="POST" id="importform">
+    <input type="hidden" name="action" value="pull"/>
+    <input type="hidden" name="registrar" id="registrar" value="{$registrar}"/>
     <div class="form-group">
         <label for="gateway" class="control-label col-sm-2">{$_lang['label.gateway']}</label>
         <div class="col-sm-10">
@@ -29,34 +29,21 @@
     </div>
     <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
-            <button id="pull" class="btn btn-default actionBttn">{$_lang['bttn.pulldomainlist']}</button>
+            <button type="button" id="pull" class="btn btn-default actionBttn">{$_lang['bttn.pulldomainlist']}</button>
         </div>
     </div>
-    <div class="form-group"{if !isset($smarty.request.search)} style="display:none"{/if}>
-        <label for="domains" class="control-label col-sm-2" style="padding-top:0px">{$_lang['label.domains']} {if isset($count)} ({$count}){/if}</label>
+    <div class="form-group listdomains" style="display:none">
+        <label for="domains" id="labeldomains" class="control-label col-sm-2" style="padding-top:0px">{$_lang['label.domains']}</label>
         <div class="col-sm-10">
-            {if empty($smarty.request.domains)}
-                {include file='error.tpl' error=$_lang['nodomainsfounderror']}
-            {else}
-                {include file='success.tpl' msg=$_lang['domainsfound']}<br/><br/>
-                <textarea name="domains" id="domains" rows="10" class="form-control">{$smarty.request.domains}</textarea>
-            {/if}
+            {include file='error.tpl' error=$_lang['nodomainsfounderror']}
+            {include file='success.tpl' msg=$_lang['domainsfound'] }<br/><br/>
+            <textarea name="domains" id="domains" rows="10" class="form-control" readonly>{$smarty.request.domains}</textarea>
         </div>
     </div>
-
-    {if !empty($smarty.request.domains)}      
-        <div class="form-group">
-            <div class="col-sm-offset-2 col-sm-10">
-                <button id="import" class="btn btn-default actionBttn">{$_lang['bttn.importdomainlist']}</button>
-            </div>
+    <div class="form-group listdomains" style="display:none">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button type="button" id="import" class="btn btn-default actionBttn">{$_lang['bttn.importdomainlist']}</button>
         </div>
-    {/if}
+    </div>
 </form>
-<script type="text/javascript">
-<!--
-$('button[class*="actionBttn"').click(function(){
-    $('#action').val(this.id);
-    this.form.submit();
-});
-// -->
-</script>
+<script type="text/javascript" src="/modules/addons/ispapidomainimport/assets/form.js"></script>

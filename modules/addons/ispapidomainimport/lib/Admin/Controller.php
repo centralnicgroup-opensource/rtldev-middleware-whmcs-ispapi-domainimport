@@ -42,27 +42,28 @@ class Controller
      *
      * @return string html code
      */
-    public function pull($vars, $smarty)
+    public function pull()
     {
-        $_REQUEST["domains"] = "";
-        $registrar = $smarty->getTemplateVars('registrar');
+        header('Cache-Control: no-cache, must-revalidate'); // HTTP/1.1
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Content-type: application/json; charset=utf-8');
+
         // fetch list of domains from API
-        $r = Helper::APICall($registrar, array(
+        $r = Helper::APICall($_REQUEST['registrar'], array(
             "COMMAND" => "QueryDomainList",
             "USERDEPTH" => "SELF",
             "ORDERBY" => "DOMAIN",
             "LIMIT" => 10000,
             "DOMAIN" => $_REQUEST["domain"],
         ));
-        if (!($r["CODE"] == 200)) {
-            $smarty->assign('error', $r["DESCRIPTION"]);
-            return $smarty->fetch('list_error.tpl');
+        $json = array(
+            "success" => ($r["CODE"] == 200),
+            "msg" => $r["DESCRIPTION"]
+        );
+        if ($json["success"]) {
+            $json["domains"] = $r["PROPERTY"]["DOMAIN"];
         }
-        foreach ($r["PROPERTY"]["DOMAIN"] as $domain) {
-            $_REQUEST["domains"] .= "$domain\n";
-        }
-        $smarty->assign('count', $r["PROPERTY"]["COUNT"][0]);
-        return $this->index($vars, $smarty);
+        die(json_encode($json));
     }
 
     /**
@@ -106,5 +107,21 @@ class Controller
             $result["msg"] = $vars["_lang"][$result["msgid"]];
         }
         die(json_encode($result));
+    }
+
+    /**
+     * getlang action. return translation texts in javascript source file format.
+     * save this as asset under assets/translations.js
+     *
+     * @param array $vars Module configuration parameters
+     * @param Smarty $smarty Smarty template instance
+     *
+     * @return string json response
+     */
+    public function getlang($vars, $smarty)
+    {
+        header('Content-Type: application/javascript');
+        echo $smarty->fetch('getlang.tpl');
+        die();
     }
 }
