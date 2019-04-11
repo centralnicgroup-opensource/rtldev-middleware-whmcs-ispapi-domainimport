@@ -1,3 +1,10 @@
+## [1.4.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.4.0...v1.4.1) (2019-04-11)
+
+
+### Bug Fixes
+
+* **logo:** use PNG format ([dd63386](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/dd63386))
+
 # [1.4.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.3.2...v1.4.0) (2019-03-26)
 
 
