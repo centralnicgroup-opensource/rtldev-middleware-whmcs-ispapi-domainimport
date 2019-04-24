@@ -13,8 +13,12 @@
 $module_version = "1.4.1";
 
 use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
-require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "LoadRegistrars.class.php")));
-require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "Helper.class.php")));
+if (!class_exists("ISPAPINEW\\LoadRegistrars")) {
+    require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "LoadRegistrars.class.php")));
+}
+if (!class_exists("ISPAPINEW\\Helper")) {
+    require_once(implode(DIRECTORY_SEPARATOR, array("lib", "vendor", "hexonet", "whmcs-ispapi-helper", "Helper.class.php")));
+}
 use ISPAPINEW\LoadRegistrars;
 
 /**
