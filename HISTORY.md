@@ -1,3 +1,10 @@
+## [1.4.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.4.1...v1.4.2) (2019-04-24)
+
+
+### Bug Fixes
+
+* **pkg:** add check for class existance before loading ([b393914](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/b393914))
+
 ## [1.4.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.4.0...v1.4.1) (2019-04-11)
 
 
