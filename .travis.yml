@@ -1,5 +1,5 @@
 language: php
-dist: xenial
+dist: trusty
 notifications:
   email:
     recipients:
@@ -36,7 +36,6 @@ script:
 jobs:
   include:
     - stage: release
-      php: 7.3
       deploy:
         provider: script
         skip_cleanup: true
