@@ -36,10 +36,8 @@ script:
 jobs:
   include:
     - stage: release
-      deploy:
-        provider: script
-        skip_cleanup: true
-        script:
-          - nvm install lts/*
-          - travis_retry npm i
-          - npx semantic-release
+      node_js: lts/*
+      script:
+        - npm prune
+        - travis_retry npm i
+        - npx semantic-release
