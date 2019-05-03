@@ -38,6 +38,7 @@ Read the following to get more information ...
 
 For the latest WHMCS minimum system requirements, please refer to
 [https://docs.whmcs.com/System_Requirements](https://docs.whmcs.com/System_Requirements)
+Please install the ISPAPI registrar module in v1.7.1 or higher first.
 
 ## Contributing ##
 
