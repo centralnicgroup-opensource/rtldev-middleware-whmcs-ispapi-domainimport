@@ -1,4 +1,4 @@
-<form class="form-horizontal" method="POST" id="importform">
+<form class="form-horizontal" method="POST" id="importform" onsubmit="return false;">
     <input type="hidden" name="action" value="pull"/>
     <input type="hidden" name="registrar" id="registrar" value="{$registrar}"/>
     <div class="form-group">

@@ -4,10 +4,8 @@ FOLDER := pkg/$(REPOID)-$(VERSION)
 
 clean:
 	rm -rf $(FOLDER)
-	composer install
 
 buildsources:
-	composer install --no-dev
 	mkdir -p $(FOLDER)/docs
 	rm -rf /tmp/$(REPOID)
 	git clone https://github.com/hexonet/$(REPOID).wiki.git /tmp/$(REPOID)
@@ -16,7 +14,7 @@ buildsources:
 	# Create docs
 	cp README.md HISTORY.md CONTRIBUTING.md LICENSE /tmp/$(REPOID)/*.md $(FOLDER)/docs
 	# Cleanup file list
-	rm -rf $(FOLDER)/docs/_*.md $(FOLDER)/docs/Home.md /tmp/$(REPOID) $(FOLDER)/lib/vendor/hexonet/whmcs-ispapi-helper/.git
+	rm -rf $(FOLDER)/docs/_*.md $(FOLDER)/docs/Home.md /tmp/$(REPOID)
 	# convert all necessary files to html
 	find $(FOLDER)/docs -maxdepth 1 -name "*.md" -exec bash -c 'pandoc "$${0}" -f markdown -t html -s --self-contained -o "$${0/\.md/}.html"' {} \;
 	pandoc $(FOLDER)/docs/LICENSE -t html -s --self-contained -o $(FOLDER)/docs/LICENSE.html
