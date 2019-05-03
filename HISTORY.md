@@ -1,3 +1,16 @@
+# [2.0.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.4.2...v2.0.0) (2019-05-03)
+
+
+### Code Refactoring
+
+* **shared-lib:** use libs provided in ispapi registrar module instead. ([73e4b28](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/73e4b28))
+
+
+### BREAKING CHANGES
+
+* **shared-lib:** We moved several libraries to the ispapi registrar module for code reuse. Therefore
+we define now v1.7.1 as minimum version requirement of the ispapi registrar module.
+
 ## [1.4.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.4.1...v1.4.2) (2019-04-24)
 
 
