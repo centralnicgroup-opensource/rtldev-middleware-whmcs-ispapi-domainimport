@@ -2,7 +2,7 @@ const ta = $("#domains");
 const showNumber = (num) => {
     const eL = $("#labeldomains");
     eL.text(eL.text().replace(/\s?\([0-9]+\)$/, ''));
-    eL.text(eL.text() + ` (${num})`);
+    eL.text(eL.text() + `(${num})`);
 };
 const listDomains = (d) => {
     $("div.listdomains").css('display', '');
