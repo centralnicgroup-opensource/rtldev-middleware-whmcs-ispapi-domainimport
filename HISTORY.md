@@ -1,3 +1,10 @@
+## [2.0.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.0...v2.0.1) (2019-05-08)
+
+
+### Bug Fixes
+
+* **jscript:** fix issue displaying the number of domains in textarea ([b9e94be](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/b9e94be))
+
 # [2.0.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v1.4.2...v2.0.0) (2019-05-03)
 
 
