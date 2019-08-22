@@ -10,7 +10,7 @@ buildsources:
 	rm -rf /tmp/$(REPOID)
 	git clone https://github.com/hexonet/$(REPOID).wiki.git /tmp/$(REPOID)
 	# Copy files (archive contents)
-	cp -R modules/addons/ispapidomainimport/* $(FOLDER)
+	cp -R modules/ $(FOLDER)
 	# Create docs
 	cp README.md HISTORY.md CONTRIBUTING.md LICENSE /tmp/$(REPOID)/*.md $(FOLDER)/docs
 	# Cleanup file list
