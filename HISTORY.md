@@ -1,3 +1,10 @@
+## [2.0.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.1...v2.0.2) (2019-09-12)
+
+
+### Bug Fixes
+
+* **semantic-release:** introducing plugin for whmcs marketplace publishing ([5ef810d](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/5ef810d))
+
 ## [2.0.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.0...v2.0.1) (2019-05-08)
 
 
