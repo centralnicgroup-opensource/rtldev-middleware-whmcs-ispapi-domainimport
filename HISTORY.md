@@ -1,3 +1,10 @@
+## [2.0.4](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.3...v2.0.4) (2019-09-13)
+
+
+### Bug Fixes
+
+* **dep-bump:** try semantic-release-whmcs v1.0.4 ([7332ae3](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/7332ae3))
+
 ## [2.0.3](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.2...v2.0.3) (2019-09-12)
 
 
