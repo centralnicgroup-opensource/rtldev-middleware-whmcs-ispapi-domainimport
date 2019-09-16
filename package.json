@@ -20,10 +20,6 @@
       "url": "https://github.com/papakai"
     },
     {
-      "name": "Anthony Schneider",
-      "url": "https://github.com/anthonyschn"
-    },
-    {
       "name": "Tulasi Seelamkurthi",
       "url": "https://github.com/tulsi91"
     }
@@ -47,73 +43,14 @@
   ],
   "devDependencies": {
     "@semantic-release/changelog": "^3.0.4",
-    "@semantic-release/commit-analyzer": "^6.2.0",
     "@semantic-release/exec": "^3.3.5",
     "@semantic-release/git": "^7.0.16",
     "@semantic-release/github": "^5.4.2",
-    "conventional-changelog": "^3.1.8",
     "semantic-release": "^15.13.18",
     "semantic-release-whmcs": "^1.0.4"
   },
-  "release": {
-    "debug": false,
-    "analyzeCommits": {
-      "preset": "angular"
-    },
-    "generateNotes": {
-      "preset": "angular"
-    },
-    "verifyConditions": [
-      "@semantic-release/changelog",
-      "@semantic-release/git",
-      "@semantic-release/github",
-      "semantic-release-whmcs"
-    ],
-    "prepare": [
-      {
-        "path": "@semantic-release/changelog",
-        "changelogFile": "HISTORY.md"
-      },
-      {
-        "path": "@semantic-release/exec",
-        "cmd": "./updateVersion.sh ${nextRelease.version} ${options.branch}"
-      },
-      {
-        "path": "@semantic-release/exec",
-        "cmd": "make allarchives"
-      },
-      {
-        "path": "@semantic-release/git",
-        "assets": [
-          "HISTORY.md",
-          "package.json",
-          "composer.json",
-          "modules/addons/ispapidomainimport/ispapidomainimport.php",
-          "whmcs-ispapi-domainimport-latest.zip",
-          "release.json"
-        ],
-        "message": "chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}"
-      }
-    ],
-    "publish": [
-      {
-        "path": "@semantic-release/github",
-        "assets": [
-          {
-            "label": "WHMCS Module (zip)",
-            "path": "pkg/whmcs-ispapi-domainimport.zip"
-          },
-          {
-            "label": "WHMCS Module (tar.gz)",
-            "path": "pkg/whmcs-ispapi-domainimport.tar.gz"
-          }
-        ]
-      },
-      "semantic-release-whmcs"
-    ]
-  },
   "scripts": {
-    "semantic-release": "semantic-release",
-    "travis-deploy-once": "travis-deploy-once"
+    "codeFix": "phpcbf --standard=PSR2 -q --ignore=\"*/vendor/*\" modules",
+    "codeCheck": "phpcs --standard=PSR2 -q -n --colors --ignore=\"*/vendor/*\" modules"
   }
 }
