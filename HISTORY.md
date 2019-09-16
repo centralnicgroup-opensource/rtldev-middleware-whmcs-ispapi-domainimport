@@ -1,3 +1,13 @@
+## [2.0.5](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.4...v2.0.5) (2019-09-16)
+
+
+### Bug Fixes
+
+* **release process:** fix git-plugin assets ([1bc7ef0](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/1bc7ef0))
+* **release process:** fix prepareCmd ([6401514](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/6401514))
+* **release process:** review plugin list ([03e2bb0](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/03e2bb0))
+* **release process:** reviewed config and process (Travis, semantic-release) ([415026f](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/415026f))
+
 ## [2.0.4](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.3...v2.0.4) (2019-09-13)
 
 
