@@ -18,7 +18,6 @@
         "assets": [
           "HISTORY.md",
           "package.json",
-          "composer.json",
           "modules/addons/ispapidomainimport/ispapidomainimport.php",
           "whmcs-ispapi-domainimport-latest.zip",
           "release.json"
