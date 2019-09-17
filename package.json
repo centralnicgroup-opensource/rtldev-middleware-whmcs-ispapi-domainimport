@@ -42,12 +42,8 @@
     "application"
   ],
   "devDependencies": {
-    "@semantic-release/changelog": "^3.0.4",
-    "@semantic-release/exec": "^3.3.5",
-    "@semantic-release/git": "^7.0.16",
-    "@semantic-release/github": "^5.4.2",
     "semantic-release": "^15.13.18",
-    "@hexonet/semantic-release-whmcs": "^1.0.7"
+    "@hexonet/semantic-release-github-whmcs-config": "^1.0.0"
   },
   "scripts": {
     "codeFix": "phpcbf --standard=PSR2 -q --ignore=\"*/vendor/*\" modules",
