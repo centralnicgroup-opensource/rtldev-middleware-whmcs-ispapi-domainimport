@@ -24,7 +24,7 @@ addons:
     update: true
 install:
   - wget https://github.com/jgm/pandoc/releases/download/2.7.3/pandoc-2.7.3-1-amd64.deb
-  - dpkg -i pandoc-2.7.3-1-amd64.deb
+  - sudo dpkg -i pandoc-2.7.3-1-amd64.deb
   - rm -rf ~/.nvm
   - git clone https://github.com/creationix/nvm.git ~/.nvm
   - (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`)
