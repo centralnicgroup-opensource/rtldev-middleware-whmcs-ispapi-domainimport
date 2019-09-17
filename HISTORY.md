@@ -1,3 +1,10 @@
+## [2.0.7](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.6...v2.0.7) (2019-09-17)
+
+
+### Bug Fixes
+
+* **release process:** use shareable configuration ([2614988](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/2614988))
+
 ## [2.0.6](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.5...v2.0.6) (2019-09-17)
 
 
