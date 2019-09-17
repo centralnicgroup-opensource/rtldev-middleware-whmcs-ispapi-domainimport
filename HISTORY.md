@@ -1,3 +1,11 @@
+## [2.0.8](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.7...v2.0.8) (2019-09-17)
+
+
+### Bug Fixes
+
+* **release process:** install pandoc 2 ([df535fd](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/df535fd))
+* **travis:** use superuser privilege for pandoc installation ([59fe43c](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/59fe43c))
+
 ## [2.0.7](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.6...v2.0.7) (2019-09-17)
 
 
