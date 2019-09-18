@@ -46,7 +46,6 @@ Please read [our development guide](https://github.com/hexonet/whmcs-ispapi-doma
 
 ## Authors ##
 
-* **Anthony Schneider** - *development* - [AnthonySchn](https://github.com/anthonyschn)
 * **Kai Schwarz** - *development* - [PapaKai](https://github.com/papakai)
 * **Tulasi Seelamkurthi** - *development* - [Tulsi91](https://github.com/tulsi91)
 
