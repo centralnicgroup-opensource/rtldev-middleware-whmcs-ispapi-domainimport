@@ -1,3 +1,10 @@
+## [2.0.9](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.8...v2.0.9) (2019-09-18)
+
+
+### Bug Fixes
+
+* **release process:** give v1.1.0 of config module a try ([56ff5ed](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/56ff5ed))
+
 ## [2.0.8](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.7...v2.0.8) (2019-09-17)
 
 
