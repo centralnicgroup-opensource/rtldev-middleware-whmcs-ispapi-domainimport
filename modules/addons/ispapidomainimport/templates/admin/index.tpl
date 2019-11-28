@@ -46,4 +46,4 @@
         </div>
     </div>
 </form>
-<script type="text/javascript" src="/modules/addons/ispapidomainimport/assets/form.js"></script>
+<script type="text/javascript" src="{$WEB_ROOT}/modules/addons/ispapidomainimport/assets/form.js"></script>

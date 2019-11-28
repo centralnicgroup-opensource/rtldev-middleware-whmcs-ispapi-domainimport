@@ -1,4 +1,4 @@
-<link rel="stylesheet" type="text/css" href="/modules/addons/ispapidomainimport/assets/styles.css"/>
+<link rel="stylesheet" type="text/css" href="${WEB_ROOT}/modules/addons/ispapidomainimport/assets/styles.css"/>
 <table class="table table-condensed small scrollable">
     <thead>
         <tr>
@@ -27,5 +27,5 @@
     <input type="hidden" name="action" value="index" />
     <input type="submit" value="{$_lang["bttn.back"]}" class="btn btn-default" />
 </form>
-<script type="text/javascript" src="/modules/addons/ispapidomainimport/assets/translations.js?{mktime()}"></script>
-<script type="text/javascript" src="/modules/addons/ispapidomainimport/assets/import.js"></script>
+<script type="text/javascript" src="${WEB_ROOT}/modules/addons/ispapidomainimport/assets/translations.js?{mktime()}"></script>
+<script type="text/javascript" src="${WEB_ROOT}/modules/addons/ispapidomainimport/assets/import.js"></script>

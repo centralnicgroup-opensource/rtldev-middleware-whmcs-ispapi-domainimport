@@ -71,7 +71,7 @@ function ispapidomainimport_output($vars)
     $smarty->escape_html = true;
     $smarty->caching = false;
     $smarty->setCompileDir($GLOBALS['templates_compiledir']);
-    $smarty->setTemplateDir(implode(DIRECTORY_SEPARATOR, array(".", "..", "modules", "addons", "ispapidomainimport", "templates", "admin")));
+    $smarty->setTemplateDir(implode(DIRECTORY_SEPARATOR, array(ROOTDIR, "modules", "addons", "ispapidomainimport", "templates", "admin")));
     if (empty($registrars)) {
         $smarty->assign("error", $vars["_lang"]["registrarerror"]);
         $smarty->display('error.tpl');
