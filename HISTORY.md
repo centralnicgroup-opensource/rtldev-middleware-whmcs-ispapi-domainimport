@@ -1,3 +1,10 @@
+## [2.0.10](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.9...v2.0.10) (2019-11-28)
+
+
+### Bug Fixes
+
+* **paths:** to consider ROOTDIR and WEB_ROOT ([3e40842](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/3e4084280b4387b3e5706afac69f4b7c13237e84))
+
 ## [2.0.9](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.8...v2.0.9) (2019-09-18)
 
 
