@@ -1,3 +1,10 @@
+## [2.0.11](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.10...v2.0.11) (2019-11-29)
+
+
+### Bug Fixes
+
+* **smarty-variables:** to populate standard smarty variables ([95496d7](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/95496d7072f76182e9a34d73e003a8273bffbe50))
+
 ## [2.0.10](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.9...v2.0.10) (2019-11-28)
 
 
