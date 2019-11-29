@@ -77,6 +77,12 @@ function ispapidomainimport_output($vars)
         $smarty->display('error.tpl');
         return;
     }
+
+    //populate smarty variables. eg: WEB_ROOT
+    global $aInt;
+    $aInt->populateStandardAdminSmartyVariables();
+    $smarty->assign($aInt->templatevars);
+
     $smarty->assign($vars);
     $smarty->assign('registrar', $registrars[0]);
     //call the dispatcher with action and data
