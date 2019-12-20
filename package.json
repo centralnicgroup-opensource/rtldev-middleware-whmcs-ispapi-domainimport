@@ -47,7 +47,7 @@
     "@hexonet/semantic-release-github-whmcs-config": "^1.0.0"
   },
   "scripts": {
-    "codeFix": "phpcbf --standard=PSR2 -q --ignore=\"*/vendor/*\" modules",
-    "codeCheck": "phpcs --standard=PSR2 -q -n --colors --ignore=\"*/vendor/*\" modules"
+    "codeFix": "phpcbf --standard=PSR1,PSR2 -q modules",
+    "codeCheck": "phpcs --standard=PSR1,PSR2 -q -n --colors modules"
   }
 }
