@@ -106,6 +106,11 @@ class Controller
         if ($result["msgid"]) {
             $result["msg"] = $vars["_lang"][$result["msgid"]];
         }
+        //if custom translation does not exist for 'msgid' in the module
+        if (!$result["msg"]) {
+            $result["msg"] = \Lang::trans($result["msgid"]);
+        }
+        
         die(json_encode($result));
     }
 
