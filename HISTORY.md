@@ -1,3 +1,10 @@
+## [2.0.12](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.11...v2.0.12) (2020-03-30)
+
+
+### Performance Improvements
+
+* **create-client:** improved response messages ([ffcaf26](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/ffcaf26dd4fb9c515ff780effcb63fc505c5f5ce))
+
 ## [2.0.11](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.10...v2.0.11) (2019-11-29)
 
 
