@@ -2,7 +2,8 @@
 
 namespace WHMCS\Module\Addon\IspapiDomainImport\Admin;
 
-use ISPAPI\Helper;
+use WHMCS\Module\Registrar\Ispapi\Ispapi;
+use WHMCS\Module\Registrar\Ispapi\Helper;
 
 /**
  * Admin Area Controller
@@ -49,7 +50,7 @@ class Controller
         header('Content-type: application/json; charset=utf-8');
 
         // fetch list of domains from API
-        $r = Helper::APICall($_REQUEST['registrar'], array(
+        $r = Ispapi::call(array(
             "COMMAND" => "QueryDomainList",
             "USERDEPTH" => "SELF",
             "ORDERBY" => "DOMAIN",
