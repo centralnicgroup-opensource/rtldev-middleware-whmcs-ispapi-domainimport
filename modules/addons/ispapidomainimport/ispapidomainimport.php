@@ -13,13 +13,9 @@
 $module_version = "2.0.12";
 
 use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
-if (!class_exists("ISPAPI\\LoadRegistrars")) {
-    require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","registrars","ispapi","lib","LoadRegistrars.class.php")));
-}
-if (!class_exists("ISPAPI\\Helper")) {
-    require_once(implode(DIRECTORY_SEPARATOR, array(ROOTDIR,"modules","registrars","ispapi","lib","Helper.class.php")));
-}
-use ISPAPI\LoadRegistrars;
+
+use WHMCS\Module\Registrar\Ispapi\Ispapi;
+use WHMCS\Module\Registrar\Ispapi\LoadRegistrars;
 
 /**
  * Define addon module configuration parameters.
