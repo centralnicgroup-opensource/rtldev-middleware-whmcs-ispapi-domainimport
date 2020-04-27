@@ -1,3 +1,15 @@
+# [3.0.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.12...v3.0.0) (2020-04-27)
+
+
+### Code Refactoring
+
+* **migration:** to support v3.x.x of the ispapi registrar module ([b724803](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/b7248038c79257d42efcd6bcd189e091814ab1e6))
+
+
+### BREAKING CHANGES
+
+* **migration:** compatible with ISPAPI registrar module v3.x.x
+
 ## [2.0.12](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.11...v2.0.12) (2020-03-30)
 
 

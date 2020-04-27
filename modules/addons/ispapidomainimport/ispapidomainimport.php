@@ -10,7 +10,7 @@
  * @license https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/LICENSE/ MIT License
  */
 
-$module_version = "2.0.12";
+$module_version = "3.0.0";
 
 use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
 
