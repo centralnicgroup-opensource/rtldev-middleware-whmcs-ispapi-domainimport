@@ -10,10 +10,7 @@
  * @license https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/LICENSE/ MIT License
  */
 
-$module_version = "3.0.0";
-
 use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
-
 use WHMCS\Module\Registrar\Ispapi\Ispapi;
 use WHMCS\Module\Registrar\Ispapi\LoadRegistrars;
 
@@ -34,21 +31,19 @@ use WHMCS\Module\Registrar\Ispapi\LoadRegistrars;
  */
 function ispapidomainimport_config()
 {
-    global $module_version;
-
     return [
         // Display name for your module
-        'name' => 'ISPAPI Domain Import',
+        "name" => "ISPAPI Domain Import",
         // Description displayed within the admin interface
-        'description' => 'This module allows to import existing Domains from HEXONET System.',
+        "description" => "This module allows to import existing Domains from HEXONET System.",
         // Module author name
-        'author' => 'HEXONET',
+        "author" => "HEXONET",
         // Default language
-        'language' => 'english',
+        "language" => "english",
         // Version number
-        'version' => $module_version,
+        "version" => "3.0.0",
         // fields
-        'fields' => []
+        "fields" => []
     ];
 }
 
