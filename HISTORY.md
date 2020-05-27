@@ -1,3 +1,10 @@
+## [3.0.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.0...v3.0.1) (2020-05-27)
+
+
+### Bug Fixes
+
+* **versioning:** move global defined version number directly into config method ([8b44199](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/8b44199992b989c2c06bb1a7154e85581a9b3d87))
+
 # [3.0.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v2.0.12...v3.0.0) (2020-04-27)
 
 
