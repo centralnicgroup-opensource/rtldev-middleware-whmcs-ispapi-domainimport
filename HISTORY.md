@@ -1,3 +1,10 @@
+## [3.0.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.1...v3.0.2) (2020-06-26)
+
+
+### Bug Fixes
+
+* **pull list:** added UNIQUE parameter to ensure domain names appearing unique ([67896c5](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/67896c50c1c2709942200580f707d7345ecd0c74))
+
 ## [3.0.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.0...v3.0.1) (2020-05-27)
 
 
