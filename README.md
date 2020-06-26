@@ -32,6 +32,7 @@ Read the following to get more information ...
 
 * [Installation](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#installation)
 * [Configuration](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#configuration)
+* [Importing Domains](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#import-domains)
 * [Cronjob configuration](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#cronjob-configuration)
 
 ## Minimum Requirements ##
