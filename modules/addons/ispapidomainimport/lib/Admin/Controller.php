@@ -52,6 +52,7 @@ class Controller
         // fetch list of domains from API
         $r = Ispapi::call(array(
             "COMMAND" => "QueryDomainList",
+            "UNIQUE" => 1,
             "USERDEPTH" => "SELF",
             "ORDERBY" => "DOMAIN",
             "LIMIT" => 10000,
