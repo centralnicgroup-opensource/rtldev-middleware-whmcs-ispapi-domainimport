@@ -1,3 +1,10 @@
+## [3.0.3](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.2...v3.0.3) (2021-01-27)
+
+
+### Bug Fixes
+
+* **ci:** migration to github actions ([6875aac](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/6875aac09a765ca21786b56b9f97a66c28518167))
+
 ## [3.0.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.1...v3.0.2) (2020-06-26)
 
 
