@@ -54,5 +54,5 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
           WHMCSMP_LOGIN: ${{ secrets.WHMCSMP_LOGIN }}
           WHMCSMP_PASSWORD: ${{ secrets.WHMCSMP_PASSWORD }}
-          WHMCSMP_PRODUCTID: ${{ secrets.WHMCSMP_PRODUCTID_ISPAPI_DOMAINCHECKER }}
+          WHMCSMP_PRODUCTID: ${{ secrets.WHMCSMP_PRODUCTID_ISPAPI_DOMAINIMPORT }}
         run: npx semantic-release
