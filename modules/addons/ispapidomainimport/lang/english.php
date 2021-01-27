@@ -1,4 +1,5 @@
 <?php
+
 /**
  * addon module language file.
  * Language: English

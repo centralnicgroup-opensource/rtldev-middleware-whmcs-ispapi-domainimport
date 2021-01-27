@@ -112,7 +112,7 @@ class Controller
         if (!$result["msg"]) {
             $result["msg"] = \Lang::trans($result["msgid"]);
         }
-        
+
         die(json_encode($result));
     }
 

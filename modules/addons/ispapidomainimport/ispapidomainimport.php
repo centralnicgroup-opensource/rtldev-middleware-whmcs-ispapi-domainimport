@@ -1,4 +1,5 @@
 <?php
+
 /**
  * WHMCS ISPAPI Domain Import Addon Module
  *
@@ -58,7 +59,7 @@ function ispapidomainimport_output($vars)
 {
     //load all the ISPAPI registrars
     $registrars = (new LoadRegistrars())->getLoadedRegistars();
-    $smarty = new Smarty;
+    $smarty = new Smarty();
     $smarty->escape_html = true;
     $smarty->caching = false;
     $smarty->setCompileDir($GLOBALS['templates_compiledir']);
