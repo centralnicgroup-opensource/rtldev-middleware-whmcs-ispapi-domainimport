@@ -30,8 +30,6 @@ jobs:
         run: phpcs --standard=PHPCompatibility -q -n --colors --runtime-set testVersion ${{ matrix.php-version }} --extensions=php --ignore=node_modules,vendor,templates_c . || exit 1;
       - name: Check PSR12 Standard
         run: phpcs --standard=PSR12 -q -n --colors --extensions=php,inc,lib --ignore=node_modules,vendor,templates_c .
-      - name: Check Linting
-        run: npm run lint
   release:
     name: Release @ NodeJS LTS - x86 - ubuntu-latest
     runs-on: ubuntu-latest
