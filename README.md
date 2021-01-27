@@ -1,7 +1,7 @@
 # WHMCS "ISPAPI" Domain Import Module #
 
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
-[![Build Status](https://travis-ci.com/hexonet/whmcs-ispapi-domainimport.svg?branch=master)](https://travis-ci.com/hexonet/whmcs-ispapi-domainimport)
+[![Build Status](https://github.com/hexonet/whmcs-ispapi-domainimport/workflows/Release/badge.svg?branch=master)](https://github.com/hexonet/whmcs-ispapi-domainimport/workflows/Release/badge.svg?branch=master)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/CONTRIBUTING.md)
 
@@ -17,6 +17,14 @@ This Repository covers the WHMCS Domain Import Module of HEXONET. It provides th
 * Set Currency
 
 ... and MORE!
+
+## Requested Features ##
+
+The below features are requested and added to our task queue:
+
+* Import Domains to an existing client account.
+
+Still, we can't provide an ETA for the listed features.
 
 ## Resources ##
 
