@@ -5,60 +5,19 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/CONTRIBUTING.md)
 
-This Repository covers the WHMCS Domain Import Module of HEXONET. It provides the following features in WHMCS:
-
-## Supported Features ##
-
-* Domain Import form HEXONET system
-* Domain Filter input field
-* Domain List preview (10k Domains at max.)
-* Client password for new clients
-* Set Payment Gateway
-* Set Currency
-
-... and MORE!
-
-## Requested Features ##
-
-The below features are requested and added to our task queue:
-
-* Import Domains to an existing client account.
-
-Still, we can't provide an ETA for the listed features.
+This Repository covers the WHMCS Domain Import Module of HEXONET.
 
 ## Resources ##
 
-* [Usage Guide](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide)
-* [Release Notes](https://github.com/hexonet/whmcs-ispapi-domainimport/releases)
-* [Development Guide](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Development-Guide)
-
-## Usage Guide ##
-
 Download the ZIP archive including the latest release version [here](https://github.com/hexonet/whmcs-ispapi-domainimport/raw/master/whmcs-ispapi-domainimport-latest.zip).
 
-Read the following to get more information ...
-
-* [Installation](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#installation)
-* [Configuration](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#configuration)
-* [Importing Domains](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#import-domains)
-* [Cronjob configuration](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Usage-Guide#cronjob-configuration)
-
-## Minimum Requirements ##
-
-For the latest WHMCS minimum system requirements, please refer to
-[https://docs.whmcs.com/System_Requirements](https://docs.whmcs.com/System_Requirements)
-Please install the ISPAPI registrar module in v3.0.0 or higher first.
-
-## Contributing ##
-
-Please read [our development guide](https://github.com/hexonet/whmcs-ispapi-domainimport/wiki/Development-Guide) for details on our code of conduct, and the process for submitting pull requests to us.
+* [Documentation](https://centralnic-reseller.github.io/centralnic-reseller/docs/hexonet/whmcs/whmcs-ispapi-domainimporter/)
+* [Release Notes](https://github.com/hexonet/whmcs-ispapi-domainimport/releases)
 
 ## Authors ##
 
-* **Kai Schwarz** - *development* - [PapaKai](https://github.com/papakai)
-* **Tulasi Seelamkurthi** - *development* - [Tulsi91](https://github.com/tulsi91)
-
-See also the list of [contributors](https://github.com/hexonet/whmcs-ispapi-domainimport/graphs/contributors) who participated in this project.
+* **Kai Schwarz** - *lead developer* - [PapaKai](https://github.com/papakai)
+* **Tulasi Seelamkurthi** - *former developer* - [Tulsi91](https://github.com/tulsi91)
 
 ## License ##
 
