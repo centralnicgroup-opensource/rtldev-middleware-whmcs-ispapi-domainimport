@@ -1,3 +1,10 @@
+## [3.0.4](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.3...v3.0.4) (2021-05-19)
+
+
+### Bug Fixes
+
+* **cleanup:** deprecated LoadRegistrars class usage ([bc4a455](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/bc4a4552c76cad3ce317516e7441a5105f8ce02f))
+
 ## [3.0.3](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.2...v3.0.3) (2021-01-27)
 
 
