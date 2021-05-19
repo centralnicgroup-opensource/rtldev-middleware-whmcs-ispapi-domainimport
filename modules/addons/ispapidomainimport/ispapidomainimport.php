@@ -13,7 +13,6 @@
 
 use WHMCS\Module\Addon\IspapiDomainImport\Admin\AdminDispatcher;
 use WHMCS\Module\Registrar\Ispapi\Ispapi;
-use WHMCS\Module\Registrar\Ispapi\LoadRegistrars;
 
 /**
  * Define addon module configuration parameters.
@@ -57,14 +56,14 @@ function ispapidomainimport_config()
  */
 function ispapidomainimport_output($vars)
 {
-    //load all the ISPAPI registrars
-    $registrars = (new LoadRegistrars())->getLoadedRegistars();
     $smarty = new Smarty();
     $smarty->escape_html = true;
     $smarty->caching = false;
     $smarty->setCompileDir($GLOBALS['templates_compiledir']);
     $smarty->setTemplateDir(implode(DIRECTORY_SEPARATOR, array(ROOTDIR, "modules", "addons", "ispapidomainimport", "templates", "admin")));
-    if (empty($registrars)) {
+    // check if the ispapi module can be loaded and is active
+    $registrar = new \WHMCS\Module\Registrar();
+    if (!$registrar->load("ispapi") || !$registrar->isActivated()) {
         $smarty->assign("error", $vars["_lang"]["registrarerror"]);
         $smarty->display('error.tpl');
         return;
@@ -76,7 +75,7 @@ function ispapidomainimport_output($vars)
     $smarty->assign($aInt->templatevars);
 
     $smarty->assign($vars);
-    $smarty->assign('registrar', $registrars[0]);
+    $smarty->assign('registrar', 'ispapi');
     //call the dispatcher with action and data
     $dispatcher = new AdminDispatcher();
     echo $dispatcher->dispatch($_REQUEST['action'], $vars, $smarty);
