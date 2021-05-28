@@ -26,13 +26,13 @@ $(document).ready(() => {
         // update progress bar
         const lenNow = domains.length;
         const progress = lenOrginal - lenNow;
-        const html = `${Math.round(progress / (lenOrginal / 100))} % `;
+        const html = `${Math.round(progress / (lenOrginal / 100))}%`;
         $('#counterleft')
             .html(html)
             .css('width', html)
             .attr('aria-valuenow', progress);
         // output last import result
-        $(`td.result:last`).html(` < span class = "label label-${res.success ? 'success' : 'danger'}" role = "alert" > ${res.msg} < / span > `);
+        $(`td.result:last`).html(`<span class="label label-${res.success ? 'success' : 'danger'}" role = "alert">${res.msg}</span>`);
         $(window).resize();
         // continue importing domains
         importDomain();
@@ -50,8 +50,8 @@ $(document).ready(() => {
             type: 'POST',
             beforeSend: () => {
                 //create line with spinner icon before import request will be sent
-                $("#inprogress").html(`${translate("status.importing")} < b > ${data.domain} < / b > ...`);
-                $("#importresults").append(` < tr > < td > ${data.domain} < / td > < td class = "result" > < span class = "glyphicon glyphicon-refresh glyphicon-refresh-animate" > < / span > < / td > < / tr > `);
+                $("#inprogress").html(`${translate("status.importing")} <b> ${data.domain} </b> ...`);
+                $("#importresults").append(`<tr><td>${data.domain}</td> <td class="result"><span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span></td></tr>`);
                 $(window).resize();
             }
         }).then((d) => {
@@ -80,17 +80,17 @@ $(document).ready(() => {
             return false;
         }
         if (!/^[a-zA-Z0-9\-\.]+\.[a-zA-Z0-9\-\.]+$/.test(domain)) {
-            $("#importresults").append(` < tr > < td > ${domain} < / td > < td class = "result" > < span class = "label label-danger" role = "alert" > ${translate('domainnameinvaliderror')} < / span > < / td > < / tr > `);
+            $("#importresults").append(`<tr><td>${domain}</td><td class="result"><span class="label label-danger" role="alert">${translate('domainnameinvaliderror')}</span></td></tr>`);
             $(window).resize();
             return false;
         }
         return true;
     });
-if (!domains.length) {
-    $("#importresults").append(` < tr > < td colspan = "2" > < span class = "label label-danger" role = "alert" > ${translate('nothingtoimporterror')} < / span > < / td > < / tr > `);
-    $(window).resize();
-    return;
-}
+    if (!domains.length) {
+        $("#importresults").append(`<tr><td colspan="2"><span class="label label-danger" role="alert">${translate('nothingtoimporterror')}</span></td></tr>`);
+        $(window).resize();
+        return;
+    }
     lenOrginal = domains.length;
     $('#counterleft').attr('aria-valuemax', lenOrginal);
     importDomain();
