@@ -31,6 +31,7 @@ $_ADDONLANG['label.currency'] = "Currency";
 
 // placeholders
 $_ADDONLANG['ph.domainfilter'] = "Enter Domain Name Filter";
+$_ADDONLANG['ph.clientid'] = "Activate the checkbox and enter the ID of the client account (optional).";
 
 // buttons
 $_ADDONLANG['bttn.pulldomainlist'] = "Pull Domain list";

@@ -28,6 +28,20 @@
         </div>
     </div>
     <div class="form-group">
+        <label class="control-label col-sm-2" for="toClientImport">
+            <input type="hidden" value="0" name="toClientImport"/>
+            <input class="form-check-input" type="checkbox" value="1" name="toClientImport" id="toClientImport"{if $smarty.request.toClientImport === "1"} checked{/if}/> Import to
+        </label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" id="clientid" name="clientid" value="{$smarty.request.clientid}" placeholder="{$_lang['ph.clientid']}"{if $smarty.request.toClientImport === "0"}disabled {/if}/>
+            <small>(Otherwise we will automatically create new clients in WHMCS based on the registrant data per domain.)</small>{$clientdetails}
+        </div>
+    </div>
+    <div class="form-group clientdetails" style="display:none;">
+        <div class="col-sm-2"></div>
+        <div class="col-sm-10" id="clientdetailscont"></div>
+    </div>
+    <div class="form-group">
         <div class="col-sm-offset-2 col-sm-10">
             <button type="button" id="pull" class="btn btn-default actionBttn">{$_lang['bttn.pulldomainlist']}</button>
         </div>

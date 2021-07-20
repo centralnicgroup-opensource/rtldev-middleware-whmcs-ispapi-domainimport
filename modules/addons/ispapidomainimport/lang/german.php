@@ -31,6 +31,7 @@ $_ADDONLANG['label.currency'] = "Währung";
 
 // placeholders
 $_ADDONLANG['ph.domainfilter'] = "Filter für Domainnamen eingeben";
+$_ADDONLANG['ph.clientid'] = "Kontrollkästchen aktivieren und ID des Kunden angeben (optional).";
 
 // buttons
 $_ADDONLANG['bttn.pulldomainlist'] = "Domains auflisten";

@@ -10,6 +10,10 @@ const listDomains = (d) => {
     ta.css('display', '').val("");
     showNumber(0);
     if (d.success) {
+        if (d.clientdetails && d.clientdetails.length) {
+            $("div.clientdetails").css('display', '');
+            $("#clientdetailscont").html(d.clientdetails);
+        }
         if (d.domains && d.domains.length) {
             $(".resultmsg:last").css('display', '');
             showNumber(d.domains.length);
@@ -28,6 +32,16 @@ const updateTextarea = () => {
         });
     }
 };
+$('#toClientImport').click(function(){
+    const $eL = $('#importform input[name="clientid"]');
+    const status = $eL.prop('disabled');
+    $eL.prop('disabled', !status);
+    if (!status) {
+        $eL.val('');
+        $('div.clientdetails').css('display', '');
+        $("#clientdetailscont").html('');
+    }
+});
 $('button[class*="actionBttn"').click(function () {
     $('#importform input[name="action"]').val(this.id);
     if (this.id === "pull") {

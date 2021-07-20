@@ -25,10 +25,11 @@ class Controller
             $smarty->assign('error', $vars["_lang"]["nogatewayerror"]);
             return $smarty->fetch('error.tpl');
         }
+
         $smarty->assign('gateways', $gateways);
-        $smarty->assign('gateway_selected', array( $_REQUEST["gateway"] => " selected" ));
+        $smarty->assign('gateway_selected', [ $_REQUEST["gateway"] => " selected" ]);
         $smarty->assign('currencies', Helper::getCurrencies());
-        $smarty->assign('currency_selected', array( $_REQUEST["currency"] => " selected" ));
+        $smarty->assign('currency_selected', [ $_REQUEST["currency"] => " selected" ]);
         if (!isset($_REQUEST["domain"])) {
             $_REQUEST["domain"] = "*";
         }
@@ -62,8 +63,31 @@ class Controller
             "success" => ($r["CODE"] == 200),
             "msg" => $r["DESCRIPTION"]
         );
+
+
+        $clientdetails = "";
+        if ($_REQUEST["toClientImport"] === "1" && isset($_REQUEST['clientid'])) {
+            $result = localAPI('GetClientsDetails', [
+                'clientid' => $_REQUEST['clientid'],
+                'stats' => false
+            ]);
+            if ($result["result"] === "success") {
+                $clientdetails = (
+                    $result["client"]["fullname"] . "<br/>" .
+                    $result["client"]["companyname"] . "<br/>" .
+                    $result["client"]["email"] . "<br/>" .
+                    $result["client"]["phonenumberformatted"] . "<br/>" .
+                    $result["client"]["address1"] . "<br/>" .
+                    (empty($result["client"]["address2"]) ? "" : $result["client"]["address2"] . "<br/>") .
+                    $result["client"]["postcode"] . " " . $result["client"]["city"] . "<br/>" .
+                    $result["client"]["state"] . ", " . $result["client"]["country"] . "<br/>"
+                );
+            }
+        }
+
         if ($json["success"]) {
             $json["domains"] = $r["PROPERTY"]["DOMAIN"];
+            $json["clientdetails"] = $clientdetails;
         }
         die(json_encode($json));
     }
@@ -97,13 +121,17 @@ class Controller
         header('Content-type: application/json; charset=utf-8');
 
         $contacts = array();
-        $result = Helper::importDomain(
+        $result = Helper::importDomain( // TODO update this method for direct client import
             $_REQUEST["domain"],
             $_REQUEST["registrar"],
             $_REQUEST["gateway"],
             $_REQUEST["currency"],
             Helper::generateRandomString(),
-            $contacts
+            $contacts,
+            [
+                "toClientImport" => (int) $_REQUEST["toClientImport"],
+                "clientid" => (int) $_REQUEST["clientid"]
+            ]
         );
         if ($result["msgid"]) {
             $result["msg"] = $vars["_lang"][$result["msgid"]];

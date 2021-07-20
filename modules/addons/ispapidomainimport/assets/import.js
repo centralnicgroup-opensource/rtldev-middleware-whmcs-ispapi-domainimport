@@ -3,6 +3,8 @@ $(document).ready(() => {
     let form = $('#backform');
     let domains = form.find('input[name="domains"]').val().split("\n");
     let data = {
+        clientid: form.find('input[name="clientid"]').val(),
+        toClientImport: form.find('input[name="toClientImport"]').val(),
         gateway: form.find('input[name="gateway"]').val(),
         currency: form.find('input[name="currency"]').val(),
         registrar: form.find('input[name="registrar"]').val(),
