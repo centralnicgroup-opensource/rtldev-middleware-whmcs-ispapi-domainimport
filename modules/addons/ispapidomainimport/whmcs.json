@@ -1,0 +1,33 @@
+{
+  "schema": "1.0",
+  "type": "whmcs-addons",
+  "name": "ispapidomainimport",
+  "license": "MIT",
+  "category": "digitalservices",
+  "description": {
+    "name": "ISPAPI Domain Import Addon v3.1.0",
+    "tagline": "Import your existing HEXONET domain portfolio to WHMCS",
+    "long": "",
+    "features": [
+      "Import single domains",
+      "Bulk Import",
+      "Automatic Create Client Accounts based on Registrant Data",
+      "Import to given Client Account"
+    ]
+  },
+  "logo": {
+    "filename": "logo.png"
+  },
+  "support": {
+    "homepage": "https:\/\/www.hexonet.net\/",
+    "learn_more": "https:\/\/github.com\/hexonet\/whmcs-ispapi-domainimport\/blob\/master\/README.md",
+    "support_url": "https:\/\/github.com\/hexonet\/whmcs-ispapi-domainimport\/wiki\/Contact-Us",
+    "docs_url": "https:\/\/github.com\/hexonet\/whmcs-ispapi-domainimport\/wiki\/Usage-Guide"
+  },
+  "authors": [
+    {
+      "name": "HEXONET",
+      "homepage": "https:\/\/www.hexonet.net\/"
+    }
+  ]
+}
