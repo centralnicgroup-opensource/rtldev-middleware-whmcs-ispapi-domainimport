@@ -1,3 +1,10 @@
+# [3.1.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.5...v3.1.0) (2021-07-20)
+
+
+### Features
+
+* **direct import:** to given customer account added (upgrade to registrar module  v6.1.0) ([b049ae7](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/b049ae7e865182ec6a35ccd7493f7f09f0286aeb))
+
 ## [3.0.5](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.4...v3.0.5) (2021-05-28)
 
 

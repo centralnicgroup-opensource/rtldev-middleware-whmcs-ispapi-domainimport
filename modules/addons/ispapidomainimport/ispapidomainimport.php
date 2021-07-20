@@ -41,7 +41,7 @@ function ispapidomainimport_config()
         // Default language
         "language" => "english",
         // Version number
-        "version" => "3.0.5",
+        "version" => "3.1.0",
         // fields
         "fields" => []
     ];
