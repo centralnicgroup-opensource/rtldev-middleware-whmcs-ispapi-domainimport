@@ -5,7 +5,7 @@
   "license": "MIT",
   "category": "digitalservices",
   "description": {
-    "name": "ISPAPI Domain Import Addon v3.1.0",
+    "name": "ISPAPI Domain Import Addon v3.1.1",
     "tagline": "Import your existing HEXONET domain portfolio to WHMCS",
     "long": "",
     "features": [

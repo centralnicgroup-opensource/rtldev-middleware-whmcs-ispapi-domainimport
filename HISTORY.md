@@ -1,3 +1,10 @@
+## [3.1.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.1.0...v3.1.1) (2021-07-20)
+
+
+### Bug Fixes
+
+* **logo:** reviewed, now also displayed nicely in the addon overview ([76e84e2](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/76e84e2eae30a3634499df854cf9bd8d5bc8820e))
+
 # [3.1.0](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.0.5...v3.1.0) (2021-07-20)
 
 
