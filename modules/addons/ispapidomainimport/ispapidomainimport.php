@@ -31,16 +31,15 @@ use WHMCS\Module\Registrar\Ispapi\Ispapi;
  */
 function ispapidomainimport_config()
 {
-    $data = file_get_contents(implode(DIRECTORY_SEPARATOR, [ROOTDIR, "modules", "addons", "ispapidomainimport", "logo.png"]));
-    $src = ($data) ? 'data:image/png;base64,' . base64_encode($data) : '';
-
+    $logo_src = file_get_contents(implode(DIRECTORY_SEPARATOR, [ROOTDIR, "modules", "addons", "ispapidomainimport", "logo.png"]));
+    $logo_data = ($logo_src) ? 'data:image/png;base64,' . base64_encode($logo_src) : '';
     return [
         // Display name for your module
         "name" => "ISPAPI Domain Import",
         // Description displayed within the admin interface
         "description" => "This module allows to import existing Domains from HEXONET System.",
         // Module author name
-        "author" => '<a href="https://www.hexonet.net/" target="_blank"><img style="max-width:100px" src="' . $src . '" alt="HEXONET" /></a>',
+        "author" => '<a href="https://www.hexonet.net/" target="_blank"><img style="max-width:100px" src="' . $logo_data . '" alt="HEXONET" /></a>',
         // Default language
         "language" => "english",
         // Version number
