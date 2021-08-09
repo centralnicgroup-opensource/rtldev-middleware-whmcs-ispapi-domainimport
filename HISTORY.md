@@ -1,3 +1,10 @@
+## [3.1.2](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.1.1...v3.1.2) (2021-08-09)
+
+
+### Bug Fixes
+
+* **HX logo:** HX logo.png + configuration ([aa0a664](https://github.com/hexonet/whmcs-ispapi-domainimport/commit/aa0a66486c231af99ff5291859b601e63e305fb4))
+
 ## [3.1.1](https://github.com/hexonet/whmcs-ispapi-domainimport/compare/v3.1.0...v3.1.1) (2021-07-20)
 
 
