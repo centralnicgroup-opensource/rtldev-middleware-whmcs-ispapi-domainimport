@@ -7,7 +7,6 @@ namespace WHMCS\Module\Addon\IspapiDomainImport\Admin;
  */
 class AdminDispatcher
 {
-
     /**
      * Dispatch request.
      *
