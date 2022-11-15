@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![PRs welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](https://github.com/hexonet/whmcs-ispapi-domainimport/blob/master/CONTRIBUTING.md)
 
-_DEPRECATION NOTICE: This repository is no longer maintained. We have been working on a new Addon that is compatible with the RRPproxy (id: keysystems) AND the HEXONET (id: ispapi) Modules. We are proud to announce the release of that new Module, find it [here](https://github.com/centralnic-reseller/whmcs-domainimporter/releases)._
+_DEPRECATION NOTICE: This repository is no longer maintained. Find it replaced by the [CentralNic Software Bundle for WHMCS](https://github.com/centralnicgroup-opensource/rtldev-middleware-whmcs/releases)._
 
 This Repository covers the WHMCS Domain Import Module of HEXONET.
 
